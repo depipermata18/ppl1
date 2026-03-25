@@ -1,0 +1,501 @@
+2025-11-04 17:49:05 | POST = Array
+(
+)
+
+2025-11-04 17:50:54 | POST = Array
+(
+    [id_peserta] => 10
+    [total_benar] => 2
+    [total_salah] => 15
+    [total_poin] => 10
+)
+
+2025-11-04 17:51:03 | POST = Array
+(
+    [id_peserta] => 10
+    [total_benar] => 2
+    [total_salah] => 15
+    [total_poin] => 10
+)
+
+2025-11-04 17:51:45 | POST = Array
+(
+)
+
+2025-11-04 18:09:50 | POST = Array
+(
+    [id_peserta] => 10
+    [total_benar] => 2
+    [total_salah] => 15
+    [total_poin] => 10
+)
+
+2025-11-04 18:10:15 | POST = Array
+(
+    [id_peserta] => 10
+    [total_benar] => 2
+    [total_salah] => 15
+    [total_poin] => 10
+)
+
+2025-11-04 18:10:58 | POST = Array
+(
+    [id_peserta] => 10
+    [total_benar] => 2
+    [total_salah] => 15
+    [total_poin] => 10
+)
+
+2025-11-04 18:11:11 | POST = Array
+(
+    [id_peserta] => 10
+    [total_benar] => 2
+    [total_salah] => 15
+    [total_poin] => 10
+)
+
+2025-11-05 13:27:19 | POST = Array
+(
+    [id_peserta] => 10
+    [total_benar] => 1
+    [total_salah] => 6
+    [total_poin] => 5
+)
+
+2025-11-05 13:27:30 | POST = Array
+(
+    [id_peserta] => 10
+    [total_benar] => 1
+    [total_salah] => 6
+    [total_poin] => 5
+)
+
+2025-11-05 13:31:46 | POST = Array
+(
+    [id_peserta] => 10
+    [total_benar] => 1
+    [total_salah] => 6
+    [total_poin] => 5
+)
+
+2025-11-05 13:37:24 | POST = Array
+(
+)
+
+2025-11-05 13:38:39 | POST = Array
+(
+)
+
+2025-11-05 13:41:24 | POST = Array
+(
+)
+
+2025-11-05 13:42:46 | POST = Array
+(
+)
+
+2025-11-05 13:42:48 | POST = Array
+(
+)
+
+2025-11-05 13:43:16 | POST = Array
+(
+)
+
+2025-11-05 13:43:44 | POST = Array
+(
+)
+
+2025-11-05 13:44:17 | POST = Array
+(
+)
+
+2025-11-05 13:45:19 | POST = Array
+(
+)
+
+2025-11-05 13:45:21 | POST = Array
+(
+)
+
+2025-11-05 13:45:22 | POST = Array
+(
+)
+
+2025-11-05 13:45:26 | POST = Array
+(
+)
+
+2025-11-05 13:45:27 | POST = Array
+(
+)
+
+2025-11-05 13:46:19 | DATA = Array
+(
+    [POST] => Array
+        (
+        )
+
+    [GET] => Array
+        (
+            [id_peserta] => 1
+            [total_benar] => 5
+            [total_salah] => 2
+            [total_poin] => 100
+
+        )
+
+)
+
+2025-11-05 13:46:20 | DATA = Array
+(
+    [POST] => Array
+        (
+        )
+
+    [GET] => Array
+        (
+            [id_peserta] => 1
+            [total_benar] => 5
+            [total_salah] => 2
+            [total_poin] => 100
+
+        )
+
+)
+
+2025-11-05 13:46:21 | DATA = Array
+(
+    [POST] => Array
+        (
+        )
+
+    [GET] => Array
+        (
+            [id_peserta] => 1
+            [total_benar] => 5
+            [total_salah] => 2
+            [total_poin] => 100
+
+        )
+
+)
+
+2025-11-05 13:46:22 | DATA = Array
+(
+    [POST] => Array
+        (
+        )
+
+    [GET] => Array
+        (
+            [id_peserta] => 1
+            [total_benar] => 5
+            [total_salah] => 2
+            [total_poin] => 100
+
+        )
+
+)
+
+2025-11-05 13:46:22 | DATA = Array
+(
+    [POST] => Array
+        (
+        )
+
+    [GET] => Array
+        (
+            [id_peserta] => 1
+            [total_benar] => 5
+            [total_salah] => 2
+            [total_poin] => 100
+
+        )
+
+)
+
+2025-11-05 13:46:23 | DATA = Array
+(
+    [POST] => Array
+        (
+        )
+
+    [GET] => Array
+        (
+            [id_peserta] => 1
+            [total_benar] => 5
+            [total_salah] => 2
+            [total_poin] => 100
+
+        )
+
+)
+
+2025-11-05 13:46:36 | DATA = Array
+(
+    [POST] => Array
+        (
+        )
+
+    [GET] => Array
+        (
+            [id_peserta] => 1
+            [total_benar] => 5
+            [total_salah] => 2
+            [total_poin] => 100
+
+        )
+
+)
+
+2025-11-05 13:46:37 | DATA = Array
+(
+    [POST] => Array
+        (
+        )
+
+    [GET] => Array
+        (
+            [id_peserta] => 1
+            [total_benar] => 5
+            [total_salah] => 2
+            [total_poin] => 100
+
+        )
+
+)
+
+2025-11-05 13:47:38 | DATA = Array
+(
+    [POST] => Array
+        (
+        )
+
+    [GET] => Array
+        (
+            [id_peserta] => 1
+            [total_benar] => 5
+            [total_salah] => 2
+            [total_poin] => 100
+        )
+
+)
+
+2025-11-05 13:47:49 | DATA = Array
+(
+    [POST] => Array
+        (
+        )
+
+    [GET] => Array
+        (
+            [id_peserta] => 1
+            [total_benar] => 5
+            [total_salah] => 2
+            [total_poin] => 100
+        )
+
+)
+
+2025-11-05 13:47:57 | DATA = Array
+(
+    [POST] => Array
+        (
+        )
+
+    [GET] => Array
+        (
+            [id_peserta] => 1
+            [total_benar] => 5
+            [total_salah] => 2
+            [total_poin] => 100
+        )
+
+)
+
+2025-11-05 13:48:50 | SCRIPT MULAI DIEKSEKUSI
+2025-11-05 13:48:50 | KONVERSI DATA = Array
+(
+    [id_peserta] => 1
+    [total_benar] => 5
+    [total_salah] => 2
+    [total_poin] => 100
+)
+
+2025-11-05 13:50:04 | POST = Array
+(
+)
+
+2025-11-05 13:50:52 | POST = Array
+(
+)
+
+2025-11-05 13:51:30 | POST = Array
+(
+    [id_peserta] => 1
+    [total_benar] => 5
+    [total_salah] => 2
+    [total_poin] => 100
+)
+
+2025-11-05 13:51:31 | POST = Array
+(
+    [id_peserta] => 1
+    [total_benar] => 5
+    [total_salah] => 2
+    [total_poin] => 100
+)
+
+2025-11-05 13:51:32 | POST = Array
+(
+    [id_peserta] => 1
+    [total_benar] => 5
+    [total_salah] => 2
+    [total_poin] => 100
+)
+
+2025-11-05 13:51:44 | POST = Array
+(
+)
+
+2025-11-05 13:53:08 | POST = Array
+(
+)
+
+2025-11-05 13:55:25 | POST = Array
+(
+)
+
+2025-11-05 13:59:17 | POST = Array
+(
+)
+
+2025-11-05 13:59:23 | POST = Array
+(
+)
+
+2025-11-05 13:59:24 | POST = Array
+(
+)
+
+2025-11-05 14:14:54 | POST = Array
+(
+)
+
+2025-11-05 14:15:01 | POST = Array
+(
+)
+
+2025-11-05 14:16:54 | POST = Array
+(
+)
+
+2025-11-05 14:17:55 | POST = Array
+(
+)
+
+2025-11-05 14:18:11 | POST = Array
+(
+)
+
+2025-11-05 14:18:41 | POST = Array
+(
+)
+
+2025-11-05 14:21:31 | POST = Array
+(
+)
+
+2025-11-05 14:21:57 | POST = Array
+(
+)
+
+2025-11-05 14:22:28 | POST = Array
+(
+    [id_peserta] => 10
+    [total_benar] => 0
+    [total_salah] => 7
+    [total_poin] => 0
+)
+
+2025-11-05 14:47:24 | POST = Array
+(
+    [id_peserta] => 10
+    [total_benar] => 0
+    [total_salah] => 7
+    [total_poin] => 0
+)
+
+2025-11-05 15:04:26 | POST = Array
+(
+    [id_peserta] => 10
+    [total_benar] => 0
+    [total_salah] => 5
+    [total_poin] => 0
+)
+
+2025-11-05 15:13:38 | POST = Array
+(
+    [id_peserta] => 10
+    [total_benar] => 0
+    [total_salah] => 5
+    [total_poin] => 0
+)
+
+2025-11-05 16:09:25 | POST = Array
+(
+    [id_peserta] => 20
+    [total_benar] => 0
+    [total_salah] => 1
+    [total_poin] => 0
+)
+
+2025-11-13 05:25:06 | POST = Array
+(
+    [id_peserta] => 1
+    [total_benar] => 1
+    [total_salah] => 1
+    [total_poin] => 5
+)
+
+2025-11-13 18:43:42 | POST = Array
+(
+    [id_peserta] => 1
+    [total_benar] => 0
+    [total_salah] => 2
+    [total_poin] => 0
+)
+
+2025-11-13 19:40:05 | POST = Array
+(
+    [id_peserta] => 1
+    [total_benar] => 2
+    [total_salah] => 0
+    [total_poin] => 10
+)
+
+2025-11-14 03:48:58 | POST = Array
+(
+    [id_peserta] => 1
+    [total_benar] => 1
+    [total_salah] => 1
+    [total_poin] => 5
+)
+
+2025-11-14 07:28:05 | POST = Array
+(
+    [id_peserta] => 1
+    [total_benar] => 2
+    [total_salah] => 0
+    [total_poin] => 10
+)
+
+2025-11-26 08:37:16 | POST = Array
+(
+    [id_peserta] => 51
+    [total_benar] => 1
+    [total_salah] => 2
+    [total_poin] => 2
+)
+
