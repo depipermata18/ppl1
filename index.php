@@ -211,27 +211,24 @@ foreach ($daftar_jurusan as &$jur) {
     }
     .hero-text p { font-size: 16px; margin: 0 0 16px; color: #222; }
     .download-btn {
-    display: inline-block;
-    background: linear-gradient(180deg, #f0f6ff, #dceaff);
-    color: #004a99;
-    padding: 16px 32px;
-    border-radius: 14px;
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    border: 1px solid #c6dcff;
-    box-shadow: 
-        0 6px 16px rgba(0, 86, 179, 0.15),
-        inset 0 1px 0 rgba(255,255,255,0.7);
-    transition: all 0.2s ease;
-    position: relative;
-}
+        display: inline-block;
+        background: linear-gradient(180deg, #57a4f2, #7fbcf0);
+        padding: 16px 32px;
+        border-radius: 999px;
+        font-size: 18px;
+        color: #000;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
     .download-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-        0 10px 22px rgba(0, 86, 179, 0.25),
-        inset 0 1px 0 rgba(255,255,255,0.8);
-}
+        animation: wobble-bounce 0.7s ease-in-out;
+        background: linear-gradient(180deg, #6ab2f5, #8ccdf2);
+        box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    }
     @keyframes wobble-bounce {
         0%,100% { transform: translateX(0) scale(1); }
         20% { transform: translateX(-6px) scale(1.03); }
@@ -329,72 +326,117 @@ foreach ($daftar_jurusan as &$jur) {
 
     /* TENTANG KAMI */
     .about-us {
-        padding: 60px 18px;
-        background: linear-gradient(135deg, #f0f7ff, #e6f0ff);
-        margin: 30px auto;
-        max-width: 1100px;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,86,179,0.08);
-        position: relative;
-        overflow: hidden;
-        border: 1px solid rgba(141,180,235,0.3);
-    }
-    .about-header h2 {
-        font-size: 32px;
-        font-weight: 800;
-        margin: 0 0 8px;
-        background: linear-gradient(90deg, #0056b3, #1a75ff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-align: center;
-    }
-    .subtitle { text-align: center; font-size: 18px; color: #0056b3; margin-bottom: 30px; }
-    .about-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 16px;
-        margin: 30px 0;
-        text-align: center;
-    }
-    .stat-number { font-size: 28px; font-weight: 800; color: #0056b3; }
-    .stat-label { font-size: 13px; color: #555; }
+    padding: 50px 24px;
+    background: #ffffff;
+    margin: 40px auto;
+    max-width: 1000px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+/* HEADER */
+.about-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.about-header h2 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* STATS */
+.about-stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 24px 0;
+    gap: 12px;
+}
+
+.stat-box {
+    flex: 1;
+    background: #f9fafb;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 22px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* CONTENT */
+.about-content {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.about-text {
+    flex: 2;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #374151;
+}
+
+.about-badge {
+    flex: 1;
+    background: #f9fafb;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.badge-item {
+    font-size: 13px;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+/* MISSION */
+.about-mission {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+}
+
+.about-mission h3 {
+    font-size: 18px;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.about-mission p {
+    font-size: 14px;
+    color: #4b5563;
+    max-width: 600px;
+    margin: auto;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
     .about-content {
-        display: flex; gap: 24px; margin: 30px 0;
-    }
-    .about-text { flex: 2; font-size: 16px; line-height: 1.7; }
-    .about-text p { margin: 0 0 16px; }
-    .about-badge {
-        flex: 1;
-        background: #eef5ff;
-        padding: 20px;
-        border-radius: 14px;
-        border-left: 4px solid #0056b3;
-    }
-    .badge-item {
-        padding: 6px 0;
-        font-size: 14px;
-        font-weight: 600;
-        color: #0056b3;
-    }
-    .about-mission {
-        text-align: center;
-        margin-top: 24px;
-        padding-top: 24px;
-        border-top: 1px dashed #ddd;
-    }
-    .about-mission h3 {
-        font-size: 22px;
-        color: #0056b3;
-        margin: 0 0 12px;
-    }
-    .about-mission p {
-        font-size: 16px;
-        color: #444;
-        max-width: 600px;
-        margin: 0 auto;
-        line-height: 1.6;
+        flex-direction: column;
     }
 
+    .about-stats {
+        flex-direction: column;
+    }
+}
     /* JURUSAN */
     .program-blk {
         padding: 40px 18px;
@@ -549,16 +591,6 @@ foreach ($daftar_jurusan as &$jur) {
         .jurusan-icon { font-size: 36px; }
         footer { margin: 20px 12px 0; }
     }
-    @keyframes zoomIn {
-    from {
-        transform: scale(0.5);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
 </style>
 </head>
 <body>
@@ -583,14 +615,14 @@ foreach ($daftar_jurusan as &$jur) {
         <div class="hero-text">
             <h2>Download Aplikasi Tes Ujian BLK</h2>
             <p>Unduh aplikasi resmi BLK untuk mengikuti tes ujian dengan mudah, cepat, dan aman.</p>
-            <a href="https://e-blk.pbltifnganjuk.com/E%20BLK.apk" 
-                class="download-btn" 
-                onclick="showPopup()" 
-                download>
+
+            <a href="https://e-blk.pbltifnganjuk.com/E%20BLK.apk" class="download-btn">
                 📥 Download Aplikasi (.APK)
-                <span class="download-sub">Versi terbaru • Aman & Resmi</span>
-                <span class="download-note">Jika gagal, hubungi admin via kontak di bawah.</span>
             </a>
+
+            <p style="margin-top:10px; font-size:13px; color:#555;">
+                Versi terbaru • Aman & Resmi
+            </p>
         </div>
     </div>
 </section>
@@ -786,6 +818,7 @@ foreach ($daftar_jurusan as &$jur) {
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+
     // Smooth scroll
     document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -797,78 +830,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Animasi scroll
+    // FIX ANIMASI (TIDAK HAPUS SHOW)
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('show');
-            else entry.target.classList.remove('show');
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+            }
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.1 });
 
-    document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+    document.querySelectorAll('.animate').forEach(el => {
+        observer.observe(el);
+    });
 
-    // Fallback video
-    const iframe = document.querySelector('.video-iframe iframe');
-    if (iframe) {
-        iframe.onload = function() {
-            setTimeout(() => {
-                const fallback = iframe.closest('.video-iframe').querySelector('.video-fallback');
-                if (fallback) fallback.style.display = 'flex';
-            }, 4000);
-        };
-    }
 });
-<script>
-function showPopup() {
-    document.getElementById("popup").style.display = "flex";
-}
-
-function closePopup() {
-    document.getElementById("popup").style.display = "none";
-}
 </script>
 
-</script>
-
-<div id="popup" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.6);
-justify-content:center;
-align-items:center;
-z-index:999;
-">
-
-    <div style="
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,0.3);
-    animation: zoomIn 0.3s ease;
-    width:300px;
-    ">
-
-        <h2>🎉 Download Dimulai!</h2>
-        <p>Aplikasi sedang didownload...</p>
-
-        <button onclick="closePopup()" style="
-        margin-top:15px;
-        padding:10px 20px;
-        border:none;
-        background:#8db4eb;
-        border-radius:10px;
-        cursor:pointer;
-        font-weight:bold;
-        ">
-        OK
-        </button>
-
-    </div>
-</div>
 </body>
 </html>
