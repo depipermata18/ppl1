@@ -183,27 +183,24 @@ foreach ($daftar_jurusan as &$jur) {
     }
     .hero-text p { font-size: 16px; margin: 0 0 16px; color: #222; }
     .download-btn {
-    display: inline-block;
-    background: linear-gradient(180deg, #f0f6ff, #dceaff);
-    color: #004a99;
-    padding: 16px 32px;
-    border-radius: 14px;
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    border: 1px solid #c6dcff;
-    box-shadow: 
-        0 6px 16px rgba(0, 86, 179, 0.15),
-        inset 0 1px 0 rgba(255,255,255,0.7);
-    transition: all 0.2s ease;
-    position: relative;
-}
+        display: inline-block;
+        background: linear-gradient(180deg, #57a4f2, #7fbcf0);
+        padding: 16px 32px;
+        border-radius: 999px;
+        font-size: 18px;
+        color: #000;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
     .download-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 
-        0 10px 22px rgba(0, 86, 179, 0.25),
-        inset 0 1px 0 rgba(255,255,255,0.8);
-}
+        animation: wobble-bounce 0.7s ease-in-out;
+        background: linear-gradient(180deg, #6ab2f5, #8ccdf2);
+        box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    }
     @keyframes wobble-bounce {
         0%,100% { transform: translateX(0) scale(1); }
         20% { transform: translateX(-6px) scale(1.03); }
@@ -521,16 +518,6 @@ foreach ($daftar_jurusan as &$jur) {
         .jurusan-icon { font-size: 36px; }
         footer { margin: 20px 12px 0; }
     }
-    @keyframes zoomIn {
-    from {
-        transform: scale(0.5);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
 </style>
 </head>
 <body>
@@ -555,14 +542,14 @@ foreach ($daftar_jurusan as &$jur) {
         <div class="hero-text">
             <h2>Download Aplikasi Tes Ujian BLK</h2>
             <p>Unduh aplikasi resmi BLK untuk mengikuti tes ujian dengan mudah, cepat, dan aman.</p>
-            <a href="https://e-blk.pbltifnganjuk.com/E%20BLK.apk" 
-                class="download-btn" 
-                onclick="showPopup()" 
-                download>
+
+            <a href="https://e-blk.pbltifnganjuk.com/E%20BLK.apk" class="download-btn">
                 📥 Download Aplikasi (.APK)
-                <span class="download-sub">Versi terbaru • Aman & Resmi</span>
-                <span class="download-note">Jika gagal, hubungi admin via kontak di bawah.</span>
             </a>
+
+            <p style="margin-top:10px; font-size:13px; color:#555;">
+                Versi terbaru • Aman & Resmi
+            </p>
         </div>
     </div>
 </section>
@@ -758,6 +745,7 @@ foreach ($daftar_jurusan as &$jur) {
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+
     // Smooth scroll
     document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -769,78 +757,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Animasi scroll
+    // FIX ANIMASI (TIDAK HAPUS SHOW)
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('show');
-            else entry.target.classList.remove('show');
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+            }
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.1 });
 
-    document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+    document.querySelectorAll('.animate').forEach(el => {
+        observer.observe(el);
+    });
 
-    // Fallback video
-    const iframe = document.querySelector('.video-iframe iframe');
-    if (iframe) {
-        iframe.onload = function() {
-            setTimeout(() => {
-                const fallback = iframe.closest('.video-iframe').querySelector('.video-fallback');
-                if (fallback) fallback.style.display = 'flex';
-            }, 4000);
-        };
-    }
 });
-<script>
-function showPopup() {
-    document.getElementById("popup").style.display = "flex";
-}
-
-function closePopup() {
-    document.getElementById("popup").style.display = "none";
-}
 </script>
 
-</script>
-
-<div id="popup" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.6);
-justify-content:center;
-align-items:center;
-z-index:999;
-">
-
-    <div style="
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,0.3);
-    animation: zoomIn 0.3s ease;
-    width:300px;
-    ">
-
-        <h2>🎉 Download Dimulai!</h2>
-        <p>Aplikasi sedang didownload...</p>
-
-        <button onclick="closePopup()" style="
-        margin-top:15px;
-        padding:10px 20px;
-        border:none;
-        background:#8db4eb;
-        border-radius:10px;
-        cursor:pointer;
-        font-weight:bold;
-        ">
-        OK
-        </button>
-
-    </div>
-</div>
 </body>
 </html>
