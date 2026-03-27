@@ -119,20 +119,48 @@ foreach ($daftar_jurusan as &$jur) {
     }
     nav a:hover::after { width: 80%; }
     nav a:hover { color: #0056b3; transform: translateY(-2px); }
-    .login-btn {
-        padding: 8px 16px;
-        background: var(--accent);
-        color: #000;
-        font-weight: 700;
-        border-radius: 30px;
-        text-decoration: none;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-        transition: transform .2s ease;
-    }
-    .login-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-    }
+.login-btn {
+    padding: 10px 24px;
+    background: var(--accent);
+    color: #111;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    border-radius: 999px;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+
+    /* elegan depth */
+    box-shadow: 
+        0 4px 10px rgba(0,0,0,0.08),
+        0 1px 2px rgba(0,0,0,0.06);
+
+    transition: all 0.25s ease;
+}
+
+/* inner light biar keliatan “mahal” */
+.login-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+    pointer-events: none;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 20px rgba(0,0,0,0.12),
+        0 2px 4px rgba(0,0,0,0.08);
+}
+
+.login-btn:active {
+    transform: translateY(0);
+    box-shadow: 
+        0 3px 8px rgba(0,0,0,0.1),
+        inset 0 2px 4px rgba(0,0,0,0.1);
+}
 
     /* MOBILE: sembunyikan nav */
     @media (max-width: 768px) {
