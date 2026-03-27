@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kalender Jadwal – e-BLK Nganjuk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+      --bg: #f9fbfd;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 6px 16px rgba(0,0,0,0.08);
+      --shadow-hover: 0 12px 24px rgba(0,0,0,0.15);
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --success: #10b981;
+      --info: #3b82f6;
+      --gray: #94a3b8;
+      --primary: #3565A5;
+      --secondary: #f8fafc;
+      --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-top: 0;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #header-placeholder {
+      position: relative;
+      z-index: 1000;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary), #1e40af);
+      color: white;
+      text-align: center;
+      padding: 80px 20px 60px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.8s ease-out;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    .hero::before {
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+      transform: translate(-50%, -50%) scale(2);
+      top: 50%;
+      left: 50%;
+    }
+    .hero::after {
+      background: linear-gradient(45deg, transparent 50%, rgba(0,0,0,0.05) 50%);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 2;
+      animation: pulseText 2s infinite alternate;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+      position: relative;
+      z-index: 2;
+    }
+
+    main {
+      padding: 30px 24px 60px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .top-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .calendar-container,
+    .form-container {
+      background: white;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 25px;
+      transition: var(--transition);
+      min-width: 300px;
+      flex: 1;
+    }
+
+    /* Panel Aksi Massal — Desain Diperindah */
+    .actions-container {
+      background: white;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 25px;
+      transition: var(--transition);
+      margin-top: 20px;
+    }
+
+    .actions-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .actions-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .calendar-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .calendar-nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .nav-btn:hover {
+      background: #2a5282;
+    }
+
+    .days-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text-light);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+
+    .calendar-day {
+      aspect-ratio: 0.8 / 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      padding: 6px;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      font-size: 0.9rem;
+    }
+
+    .calendar-day:hover {
+      background: #eef2f7;
+    }
+
+    .calendar-day.current-month {
+      background: #f1f5f9;
+    }
+
+    .calendar-day.today {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    .calendar-day.has-event::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      width: 6px;
+      height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+    }
+
+    .calendar-day:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: rgba(0, 0, 0, 0.85);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      z-index: 10;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      pointer-events: none;
+      max-width: 220px;
+      text-align: center;
+    }
+
+    .form-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      font-size: 15px;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(53, 101, 165, 0.2);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
+      margin-bottom: 22px;
+    }
+
+    .btn-submit {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      font-size: 1rem;
+      box-shadow: 0 4px 10px rgba(53, 101, 165, 0.2);
+    }
+
+    .btn-submit:hover {
+      background: #2a5282;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(53, 101, 165, 0.3);
+    }
+
+    /* Panel Aksi Massal - Desain Baru */
+    .actions-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .select-all-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      background: #f1f5f9;
+      border-radius: 12px;
+    }
+
+    .select-all-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .bulk-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-bulk {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    .btn-bulk.delete {
+      background: var(--danger);
+      color: white;
+      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
+    }
+    .btn-bulk.delete:hover {
+      background: #dc2626;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-bulk.update {
+      background: var(--warning);
+      color: #1e293b;
+      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
+    }
+    .btn-bulk.update:hover {
+      background: #d97706;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(245, 158, 11, 0.3);
+    }
+
+    .jadwal-container {
+      width: 100%;
+      background: white;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 25px;
+      margin-top: 20px;
+    }
+
+    .jadwal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .jadwal-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .jadwal-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .jadwal-card {
+      background: var(--secondary);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      border-left: 4px solid var(--primary);
+      position: relative;
+    }
+
+    .jadwal-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      background: white;
+    }
+
+    .select-checkbox {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .jadwal-header-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .jadwal-title-card {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .jadwal-time,
+    .jadwal-location,
+    .jadwal-jurusan {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .jadwal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .btn-sm {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-edit-sm { background: #fbbf24; color: #1e293b; }
+    .btn-edit-sm:hover { background: #f59e0b; }
+
+    .btn-delete-sm { background: #ef4444; color: white; }
+    .btn-delete-sm:hover { background: #dc2626; }
+
+    #toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 3500;
+    }
+
+    .toast {
+      padding: 14px 24px;
+      border-radius: 14px;
+      color: white;
+      font-weight: 600;
+      box-shadow: var(--shadow-hover);
+      margin-top: 10px;
+      opacity: 0;
+      transform: translateX(120%);
+      animation: slideInToast 0.4s forwards, fadeOutToast 0.5s 4s forwards;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .bulk-action-bar {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: #fff;
+  border-radius: 14px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+}
+
+.hidden {
+  display: none;
+}
+
+.bulk-action-bar span {
+  font-weight: 600;
+  color: #444;
+  margin-right: auto;
+}
+
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--danger); }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      opacity: 0;
+      animation: fadeIn 0.3s forwards;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 22px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: var(--shadow-hover);
+      padding: 30px;
+      transform: scale(0.9);
+      opacity: 0;
+      animation: modalIn 0.4s 0.1s forwards;
+    }
+
+    @keyframes modalIn {
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: var(--text-light);
+      transition: var(--transition);
+    }
+
+    .close-btn:hover {
+      color: var(--danger);
+      transform: scale(1.1);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      padding: 12px 24px;
+      font-weight: 600;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(53, 101, 165, 0.2);
+    }
+    .btn-primary:hover {
+      background: #2a5282;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(53, 101, 165, 0.3);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+      padding: 12px 24px;
+      font-weight: 600;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-secondary:hover {
+      background: #cbd5e1;
+      transform: translateY(-2px);
+    }
+
+    .modal-confirm {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .modal-confirm h3 {
+      margin-bottom: 15px;
+      color: var(--text);
+    }
+
+    .modal-confirm p {
+      margin-bottom: 25px;
+      color: var(--text-light);
+    }
+
+    .btn-yes {
+      background: var(--danger);
+      color: white;
+      margin-right: 10px;
+    }
+
+    .btn-yes:hover {
+      background: #dc2626;
+    }
+
+    .btn-no {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-no:hover {
+      background: #cbd5e1;
+    }
+
+    .emoji {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: bounce 1s infinite alternate;
+    }
+    .filter-btn {
+  background: #e5e7eb;
+  color: #1e293b;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all .2s;
+}
+
+.filter-btn.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 12px rgba(53,101,165,.4);
+}
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-15px); }
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes slideInToast { to { opacity: 1; transform: translateX(0); } }
+    @keyframes fadeOutToast { to { opacity: 0; transform: translateX(120%); } }
+    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes pulseText {
+      0% { text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+      100% { text-shadow: 0 4px 8px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.3); }
+    }
+
+    @media (max-width: 768px) {
+      .top-row { flex-direction: column; }
+      .calendar-container, .form-container, .actions-container {
+        padding: 20px;
+        margin: 0 15px;
+      }
+      .bulk-actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .btn-bulk {
+        flex: 1;
+        min-width: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<section class="hero">
+  <h1>📅 Kalender Jadwal Pelatihan</h1>
+  <p>Atur dan kelola jadwal pelatihan Anda</p>
+</section>
+
+<div id="toast-container"></div>
+
+<main>
+  <div class="container">
+    <!-- Baris 1: Kalender + Form -->
+    <div class="top-row">
+      <div class="calendar-container">
+        <div class="calendar-header">
+          <h2 class="calendar-title" id="currentMonthYear">November 2025</h2>
+          <div class="calendar-nav">
+            <button class="nav-btn" onclick="changeMonth(-1)">‹</button>
+            <button class="nav-btn" onclick="changeMonth(0)">Hari Ini</button>
+            <button class="nav-btn" onclick="changeMonth(1)">›</button>
+          </div>
+        </div>
+        <div class="days-header">
+          <div>Min</div>
+          <div>Sen</div>
+          <div>Sel</div>
+          <div>Rab</div>
+          <div>Kam</div>
+          <div>Jum</div>
+          <div>Sab</div>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+      </div>
+
+      <div class="form-container">
+        <h2 class="form-title">Tambah Jadwal Baru</h2>
+        <form id="jadwalAddForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nama Jadwal</label>
+              <input type="text" id="nama_jadwal_add" class="form-control" required placeholder="Pelatihan Web Dev...">
+            </div>
+            <div class="form-group">
+              <label>Lokasi</label>
+              <input type="text" id="lokasi_add" class="form-control" required placeholder="Lab A...">
+            </div>
+            <div class="form-group">
+              <label>Jurusan</label>
+              <select id="id_jurusan_add" class="form-control" required>
+                <option value="">Pilih Jurusan</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Waktu Mulai</label>
+              <input type="datetime-local" id="waktu_mulai_add" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Waktu Selesai</label>
+              <input type="datetime-local" id="waktu_selesai_add" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Keterangan (Opsional)</label>
+              <textarea id="keterangan_add" class="form-control" rows="3" placeholder="Catatan tambahan..."></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit">💾 Simpan Jadwal Baru</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Baris 2: Panel Aksi Massal (DI BAWAH, DESAIN BARU) -->
+    <div class="actions-container">
+      <div class="actions-header">
+        <h2 class="actions-title">Aksi Massal</h2>
+      </div>
+      <div class="actions-grid">
+  <div class="select-all-group">
+    <input type="checkbox" id="selectAllCheckbox">
+    <span>Pilih semua jadwal aktif</span>
+  </div>
+</div>
+        <div id="bulkActionBar" class="bulk-action-bar hidden">
+  <span id="selectedCount">0 jadwal dipilih</span>
+
+  <button type="button" class="btn-bulk update"
+    onclick="bukaModalUbahWaktuMassal()">
+    ⏱️ Ubah Waktu
+  </button>
+
+  <button type="button" class="btn-bulk delete"
+    onclick="konfirmasiHapusMassal()">
+    🗑️ Hapus
+  </button>
+</div>
+
+    <!-- Baris 3: Daftar Jadwal -->
+    <div class="jadwal-header">
+  <h2 class="jadwal-title">Daftar Jadwal Aktif & Mendatang</h2>
+
+  <div style="display:flex; gap:8px; flex-wrap:wrap;">
+<button class="filter-btn" onclick="setFilter('minggu', this)">Minggu Ini</button>
+<button class="filter-btn" onclick="setFilter('bulan', this)">Bulan Ini</button>
+<button class="filter-btn" onclick="setFilter('tahun', this)">Tahun Ini</button>
+<button class="filter-btn active" onclick="setFilter('semua', this)">Semua</button>
+  </div>
+</div>
+      <div class="jadwal-list" id="jadwalList">
+        <!-- Jadwal cards akan dimuat di sini -->
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<!-- Modal Edit Jadwal -->
+<div id="modalEdit" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalEditTitle">Edit Jadwal</h3>
+      <button class="close-btn" onclick="tutupModalEdit()">&times;</button>
+    </div>
+    <form id="jadwalEditForm">
+      <input type="hidden" id="id_jadwal_edit">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nama Jadwal</label>
+          <input type="text" id="nama_jadwal_edit" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Lokasi</label>
+          <input type="text" id="lokasi_edit" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Jurusan</label>
+          <select id="id_jurusan_edit" class="form-control" required>
+            <option value="">Pilih Jurusan</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Waktu Mulai</label>
+          <input type="datetime-local" id="waktu_mulai_edit" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Waktu Selesai</label>
+          <input type="datetime-local" id="waktu_selesai_edit" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Keterangan</label>
+          <textarea id="keterangan_edit" class="form-control" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" onclick="tutupModalEdit()">❌ Batal</button>
+        <button type="submit" class="btn-primary">💾 Simpan Perubahan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Konfirmasi Hapus -->
+<div id="modalConfirm" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">Konfirmasi Hapus</h3>
+      <button class="close-btn" onclick="tutupModalConfirm()">&times;</button>
+    </div>
+    <div class="modal-confirm">
+      <div class="emoji">⚠️</div>
+      <h3>Yakin ingin menghapus jadwal ini?</h3>
+      <p>Tindakan ini tidak bisa dibatalkan.</p>
+      <div class="modal-actions">
+        <button class="btn-secondary btn-no" onclick="tutupModalConfirm()">❌ Batal</button>
+        <button class="btn-primary btn-yes" id="confirmDeleteBtn">🗑️ Ya, Hapus</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Ubah Waktu Massal -->
+<div id="modalBulkTime" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">Ubah Waktu Massal</h3>
+      <button class="close-btn" onclick="tutupModalBulkTime()">&times;</button>
+    </div>
+    <form id="bulkTimeForm">
+      <div class="form-group">
+        <label>Waktu Mulai Baru</label>
+        <input type="datetime-local" id="bulk_waktu_mulai" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>Waktu Selesai Baru</label>
+        <input type="datetime-local" id="bulk_waktu_selesai" class="form-control" required>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" onclick="tutupModalBulkTime()">❌ Batal</button>
+        <button type="submit" class="btn-primary">💾 Terapkan ke Terpilih</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Konfirmasi Hapus Massal -->
+<div id="modalConfirmMassal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">Konfirmasi Hapus Massal</h3>
+      <button class="close-btn" onclick="tutupModalConfirmMassal()">&times;</button>
+    </div>
+    <div class="modal-confirm">
+      <div class="emoji">⚠️</div>
+      <h3>Hapus semua jadwal terpilih?</h3>
+      <p>Anda akan menghapus <span id="jumlahHapusMassal">0</span> jadwal.</p>
+      <div class="modal-actions">
+        <button class="btn-secondary btn-no" onclick="tutupModalConfirmMassal()">❌ Batal</button>
+        <button class="btn-primary btn-yes" id="confirmDeleteMassalBtn">🗑️ Ya, Hapus Semua</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// 🔸 Load Header & Footer
+async function loadIncludes() {
+  try {
+    const [headerRes, footerRes] = await Promise.all([
+      fetch('includes/header.html'),
+      fetch('includes/footer.html')
+    ]);
+    if (headerRes.ok) document.getElementById('header-placeholder').innerHTML = await headerRes.text();
+    if (footerRes.ok) document.getElementById('footer-placeholder').innerHTML = await footerRes.text();
+
+    const userRes = await fetch('dashboard_admin_api.php');
+    if (userRes.ok) {
+      const userData = await userRes.json();
+      const avatar = document.getElementById('header-avatar');
+      const username = document.getElementById('header-username');
+
+      if (avatar && userData.logged_in_foto_profil_path) {
+        avatar.src = userData.logged_in_foto_profil_path;
+        avatar.onerror = () => avatar.src = 'images/profile.png';
+      }
+      if (username) {
+        username.textContent = userData.logged_in_username || 'Akun';
+      }
+    }
+  } catch (err) {
+    console.warn('Gagal muat header/footer/user ', err);
+  }
+}
+
+function isValidDate(dateStr) {
+  if (!dateStr || typeof dateStr !== 'string') return false;
+  const d = new Date(dateStr);
+  return !isNaN(d.getTime());
+}
+function setFilter(mode, btn) {
+  filterMode = mode;
+
+  // matikan semua tombol
+  document.querySelectorAll('.filter-btn').forEach(b =>
+    b.classList.remove('active')
+  );
+
+  // aktifkan yg diklik
+  if (btn) btn.classList.add('active');
+
+  renderAllJadwal();
+}
+
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+let allJadwal = [];
+let allJurusan = [];
+let filterMode = 'all';
+
+function populateJurusanDropdowns() {
+  const selectAdd = document.getElementById('id_jurusan_add');
+  const selectEdit = document.getElementById('id_jurusan_edit');
+
+  selectAdd.innerHTML = '<option value="">Pilih Jurusan</option>';
+  selectEdit.innerHTML = '<option value="">Pilih Jurusan</option>';
+
+  if (!Array.isArray(allJurusan)) return;
+
+  allJurusan.forEach(j => {
+    const optAdd = document.createElement('option');
+    optAdd.value = j.id_jurusan;
+    optAdd.textContent = j.nama_jurusan;
+    selectAdd.appendChild(optAdd);
+
+    const optEdit = document.createElement('option');
+    optEdit.value = j.id_jurusan;
+    optEdit.textContent = j.nama_jurusan;
+    selectEdit.appendChild(optEdit);
+  });
+}
+
+function renderCalendar() {
+  const firstDay = new Date(currentYear, currentMonth, 1);
+  const lastDay = new Date(currentYear, currentMonth + 1, 0);
+  const startDay = firstDay.getDay();
+  const daysInMonth = lastDay.getDate();
+
+  const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+  document.getElementById('currentMonthYear').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+  const grid = document.getElementById('calendarGrid');
+  grid.innerHTML = '';
+
+  for (let i = 0; i < startDay; i++) {
+    const cell = document.createElement('div');
+    cell.classList.add('calendar-day');
+    grid.appendChild(cell);
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = new Date(currentYear, currentMonth, day);
+    const cell = document.createElement('div');
+    cell.classList.add('calendar-day', 'current-month');
+    if (date.toDateString() === new Date().toDateString()) cell.classList.add('today');
+    cell.textContent = day;
+    cell.dataset.date = date.toLocaleDateString('sv-SE');
+
+    const now = new Date();
+    const jadwalHariIni = allJadwal.filter(j => {
+      if (!isValidDate(j.waktu_mulai) || !isValidDate(j.waktu_selesai)) return false;
+      const jadwalDate = new Date(j.waktu_mulai).toLocaleDateString('sv-SE');
+      const selesai = new Date(j.waktu_selesai);
+      return jadwalDate === cell.dataset.date && selesai > now;
+    });
+
+    if (jadwalHariIni.length > 0) {
+      cell.classList.add('has-event');
+      const tooltip = document.createElement('div');
+      tooltip.className = 'tooltip';
+      
+      const tooltipLines = jadwalHariIni.map(j => {
+        const jurusan = allJurusan.find(jur => jur.id_jurusan == j.id_jurusan);
+        const namaJurusan = jurusan ? jurusan.nama_jurusan : '—';
+        return `🎓 ${namaJurusan} – ${j.nama_jadwal}`;
+      }).join('\n');
+      
+      tooltip.textContent = tooltipLines;
+      cell.appendChild(tooltip);
+    }
+
+    grid.appendChild(cell);
+  }
+}
+
+function getSelectedJadwalIds() {
+  const checkboxes = document.querySelectorAll('.select-checkbox:checked');
+  return Array.from(checkboxes).map(cb => cb.dataset.idJadwal);
+}
+
+function toggleSelectAll() {
+  const checked = document.getElementById('selectAllCheckbox').checked;
+  document.querySelectorAll('.select-checkbox').forEach(cb => cb.checked = checked);
+}
+
+function renderAllJadwal() {
+  const container = document.getElementById('jadwalList');
+  const now = new Date();
+
+  let filtered = allJadwal.filter(j => {
+    if (!isValidDate(j.waktu_mulai) || !isValidDate(j.waktu_selesai)) return false;
+
+    const start = new Date(j.waktu_mulai);
+
+    if (filterMode === 'minggu') {
+      const startOfWeek = new Date(now);
+      startOfWeek.setDate(now.getDate() - now.getDay());
+      startOfWeek.setHours(0,0,0,0);
+
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      endOfWeek.setHours(23,59,59,999);
+
+      return start >= startOfWeek && start <= endOfWeek;
+    }
+
+    if (filterMode === 'bulan') {
+      return start.getMonth() === now.getMonth() &&
+             start.getFullYear() === now.getFullYear();
+    }
+
+    if (filterMode === 'tahun') {
+      return start.getFullYear() === now.getFullYear();
+    }
+
+    return true; // semua
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <p style="text-align:center; padding:20px; color:var(--text-light);">
+        Tidak ada jadwal sesuai filter.
+      </p>`;
+    updateBulkActionBar();
+    return;
+  }
+
+  let html = '';
+
+  filtered.forEach(j => {
+    const start = new Date(j.waktu_mulai);
+    const end = new Date(j.waktu_selesai);
+    const jurusan = allJurusan.find(jur => jur.id_jurusan == j.id_jurusan);
+    const namaJurusan = jurusan ? jurusan.nama_jurusan : '—';
+
+    html += `
+      <div class="jadwal-card">
+        <input type="checkbox"
+               class="select-checkbox"
+               data-id-jadwal="${j.id_jadwal}">
+
+        <div class="jadwal-header-card">
+          <div class="jadwal-title-card">${j.nama_jadwal}</div>
+        </div>
+
+        <div class="jadwal-time">
+          📅 ${start.toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' })}
+          | 🕒 ${start.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' })}
+          - ${end.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' })}
+        </div>
+
+        <div class="jadwal-location">📍 ${j.lokasi}</div>
+        <div class="jadwal-jurusan">🎓 ${namaJurusan}</div>
+
+        <div class="jadwal-actions">
+          <button class="btn-sm btn-edit-sm" onclick="editJadwal(${j.id_jadwal})">✏️ Edit</button>
+          <button class="btn-sm btn-delete-sm" onclick="konfirmasiHapus(${j.id_jadwal})">🗑️ Hapus</button>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+
+  document.querySelectorAll('.select-checkbox').forEach(cb => {
+    cb.addEventListener('change', updateBulkActionBar);
+  });
+
+  const selectAll = document.getElementById('selectAllCheckbox');
+  if (selectAll) {
+    selectAll.onchange = () => {
+      document.querySelectorAll('.select-checkbox').forEach(cb => {
+        cb.checked = selectAll.checked;
+      });
+      updateBulkActionBar();
+    };
+  }
+
+  updateBulkActionBar();
+}
+
+function changeMonth(change) {
+  if (change === 0) {
+    const now = new Date();
+    currentMonth = now.getMonth();
+    currentYear = now.getFullYear();
+  } else {
+    currentMonth += change;
+    if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+    else if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+  }
+  renderCalendar();
+}
+
+function editJadwal(id) {
+  const jadwal = allJadwal.find(j => j.id_jadwal == id);
+  if (!jadwal) return;
+
+  document.getElementById('modalEditTitle').textContent = 'Edit Jadwal';
+  document.getElementById('id_jadwal_edit').value = jadwal.id_jadwal;
+  document.getElementById('nama_jadwal_edit').value = jadwal.nama_jadwal;
+  document.getElementById('lokasi_edit').value = jadwal.lokasi;
+  document.getElementById('keterangan_edit').value = jadwal.keterangan || '';
+  document.getElementById('id_jurusan_edit').value = jadwal.id_jurusan;
+
+  let startTime = jadwal.waktu_mulai;
+  let endTime = jadwal.waktu_selesai;
+
+  if (startTime === '0000-00-00 00:00:00') startTime = '';
+  if (endTime === '0000-00-00 00:00:00') endTime = '';
+
+  if (startTime) {
+    const dt = new Date(startTime);
+    if (!isNaN(dt.getTime())) {
+      document.getElementById('waktu_mulai_edit').value = dt.toISOString().slice(0, 16);
+    }
+  }
+  if (endTime) {
+    const dt = new Date(endTime);
+    if (!isNaN(dt.getTime())) {
+      document.getElementById('waktu_selesai_edit').value = dt.toISOString().slice(0, 16);
+    }
+  }
+
+  document.getElementById('modalEdit').classList.add('active');
+}
+
+document.getElementById('jadwalEditForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const idJadwal = document.getElementById('id_jadwal_edit').value;
+  const namaJadwal = document.getElementById('nama_jadwal_edit').value.trim();
+  const lokasi = document.getElementById('lokasi_edit').value.trim();
+  const keterangan = document.getElementById('keterangan_edit').value.trim();
+  const idJurusan = document.getElementById('id_jurusan_edit').value;
+  const waktuMulai = document.getElementById('waktu_mulai_edit').value;
+  const waktuSelesai = document.getElementById('waktu_selesai_edit').value;
+
+  if (!idJadwal || !namaJadwal || !lokasi || !idJurusan || !waktuMulai || !waktuSelesai) {
+    showToast("Semua field wajib diisi.", "error");
+    return;
+  }
+
+  if (new Date(waktuSelesai) <= new Date(waktuMulai)) {
+    showToast("Waktu selesai harus setelah waktu mulai.", "error");
+    return;
+  }
+
+  const formData = {
+    id_jadwal: idJadwal,
+    nama_jadwal: namaJadwal,
+    lokasi: lokasi,
+    keterangan: keterangan,
+    id_jurusan: idJurusan,
+    waktu_mulai: waktuMulai,
+    waktu_selesai: waktuSelesai
+  };
+
+  try {
+    const res = await fetch('kelola_jadwal.php', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      showToast("Jadwal berhasil diperbarui!", "success");
+      tutupModalEdit();
+      await loadAllJadwal();
+    } else {
+      showToast(result.error || 'Gagal memperbarui jadwal.', "error");
+    }
+  } catch (error) {
+    console.error('Error saat mengedit jadwal:', error);
+    showToast('Terjadi kesalahan jaringan.', "error");
+  }
+});
+
+function konfirmasiHapus(id) {
+  document.getElementById('confirmDeleteBtn').onclick = () => hapusJadwal(id);
+  document.getElementById('modalConfirm').classList.add('active');
+}
+
+function hapusJadwal(id) {
+  fetch('kelola_jadwal.php', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id_jadwal: id })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      showToast(data.message);
+      loadAllJadwal();
+    } else {
+      throw new Error(data.error || 'Gagal menghapus');
+    }
+  })
+  .catch(err => {
+    showToast(err.message, 'error');
+  });
+  tutupModalConfirm();
+}
+
+function tutupModalEdit() {
+  document.getElementById('modalEdit').classList.remove('active');
+  document.getElementById('jadwalEditForm').reset();
+}
+
+function tutupModalConfirm() {
+  document.getElementById('modalConfirm').classList.remove('active');
+}
+
+// 🔸 Tambah Jadwal
+document.getElementById('jadwalAddForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const namaJadwal = document.getElementById('nama_jadwal_add').value.trim();
+  const lokasi = document.getElementById('lokasi_add').value.trim();
+  const idJurusan = document.getElementById('id_jurusan_add').value;
+  const waktuMulai = document.getElementById('waktu_mulai_add').value;
+  const waktuSelesai = document.getElementById('waktu_selesai_add').value;
+  const keterangan = document.getElementById('keterangan_add').value.trim();
+
+  if (!namaJadwal || !lokasi || !idJurusan || !waktuMulai || !waktuSelesai) {
+    showToast("Semua field wajib diisi.", "error");
+    return;
+  }
+
+  if (new Date(waktuSelesai) <= new Date(waktuMulai)) {
+    showToast("Waktu selesai harus setelah waktu mulai.", "error");
+    return;
+  }
+
+  const formData = {
+    nama_jadwal: namaJadwal,
+    lokasi: lokasi,
+    keterangan: keterangan,
+    id_jurusan: idJurusan,
+    waktu_mulai: waktuMulai,
+    waktu_selesai: waktuSelesai
+  };
+
+  try {
+    const res = await fetch('kelola_jadwal.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      showToast("Jadwal berhasil ditambahkan!", "success");
+      document.getElementById('jadwalAddForm').reset();
+      loadAllJadwal();
+    } else {
+      showToast(result.error || 'Gagal menyimpan data.', "error");
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    showToast('Terjadi kesalahan jaringan.', "error");
+  }
+});
+
+// 🔸 Aksi Massal
+// ===== HELPER BULK ACTION =====
+function resetBulkSelection() {
+  document.querySelectorAll('.select-checkbox').forEach(cb => cb.checked = false);
+
+  const selectAll = document.getElementById('selectAllCheckbox');
+  if (selectAll) selectAll.checked = false;
+
+  updateBulkActionBar();
+}
+function updateBulkActionBar() {
+  const checked = document.querySelectorAll('.select-checkbox:checked');
+  const bar = document.getElementById('bulkActionBar');
+
+  if (!bar) return;
+
+  if (checked.length > 0) {
+    bar.classList.remove('hidden');
+    document.getElementById('selectedCount').textContent =
+      `${checked.length} jadwal dipilih`;
+  } else {
+    bar.classList.add('hidden');
+  }
+}
+
+function konfirmasiHapusMassal() {
+  const selectedIds = getSelectedJadwalIds();
+  if (selectedIds.length === 0) {
+    showToast("Pilih minimal 1 jadwal untuk dihapus.", "error");
+    return;
+  }
+  document.getElementById('jumlahHapusMassal').textContent = selectedIds.length;
+  document.getElementById('confirmDeleteMassalBtn').onclick = () => hapusJadwalMassal(selectedIds);
+  document.getElementById('modalConfirmMassal').classList.add('active');
+}
+
+async function hapusJadwalMassal(ids) {
+  try {
+    const results = await Promise.all(
+      ids.map(id =>
+        fetch('kelola_jadwal.php', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id_jadwal: id })
+        }).then(res => res.json())
+      )
+    );
+
+    const successCount = results.filter(r => r.success).length;
+    const errorCount = ids.length - successCount;
+
+    if (errorCount > 0) {
+      showToast(`Berhasil hapus ${successCount}, gagal ${errorCount}.`, "warning");
+    } else {
+      showToast(`Berhasil menghapus ${successCount} jadwal.`, "success");
+    }
+
+    tutupModalConfirmMassal();
+    resetBulkSelection();
+    loadAllJadwal();
+  } catch (err) {
+    showToast("Gagal menghapus jadwal terpilih.", "error");
+  }
+}
+
+function bukaModalUbahWaktuMassal() {
+  const selectedIds = getSelectedJadwalIds();
+  if (selectedIds.length === 0) {
+    showToast("Pilih minimal 1 jadwal untuk ubah waktu.", "error");
+    return;
+  }
+  document.getElementById('modalBulkTime').classList.add('active');
+}
+
+document.getElementById('bulkTimeForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const mulai = document.getElementById('bulk_waktu_mulai').value;
+  const selesai = document.getElementById('bulk_waktu_selesai').value;
+
+  if (!mulai || !selesai) {
+    showToast("Waktu mulai dan selesai wajib diisi.", "error");
+    return;
+  }
+
+  if (new Date(selesai) <= new Date(mulai)) {
+    showToast("Waktu selesai harus setelah waktu mulai.", "error");
+    return;
+  }
+
+  const selectedIds = getSelectedJadwalIds();
+  if (selectedIds.length === 0) {
+    showToast("Tidak ada jadwal terpilih.", "error");
+    return;
+  }
+
+  try {
+    const updates = selectedIds.map(id => ({
+      id_jadwal: id,
+      waktu_mulai: mulai,
+      waktu_selesai: selesai
+    }));
+
+    const results = await Promise.all(
+      updates.map(data =>
+        fetch('kelola_jadwal.php', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        }).then(res => res.json())
+      )
+    );
+
+    const successCount = results.filter(r => r.success).length;
+    const errorCount = updates.length - successCount;
+
+    if (errorCount > 0) {
+      showToast(`Berhasil ubah ${successCount}, gagal ${errorCount}.`, "warning");
+    } else {
+      showToast(`Waktu ${successCount} jadwal berhasil diubah!`, "success");
+    }
+
+    tutupModalBulkTime();
+    resetBulkSelection();
+    loadAllJadwal();
+  } catch (err) {
+    showToast("Gagal mengubah waktu jadwal.", "error");
+  }
+});
+
+function tutupModalBulkTime() {
+  document.getElementById('modalBulkTime').classList.remove('active');
+  document.getElementById('bulkTimeForm').reset();
+}
+
+function tutupModalConfirmMassal() {
+  document.getElementById('modalConfirmMassal').classList.remove('active');
+}
+
+function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span>●</span> ${message}`;
+  document.getElementById('toast-container').appendChild(toast);
+  setTimeout(() => {
+    toast.style.animation = 'fadeOutToast 0.4s forwards';
+    setTimeout(() => toast.remove(), 400);
+  }, 4000);
+}
+
+async function loadAllJadwal() {
+  try {
+    const res = await fetch('kelola_jadwal.php', {
+      method: 'GET',
+      credentials: 'include'
+    });
+
+    const data = await res.json();
+
+    if (data.error) throw new Error(data.error);
+    if (!data.jadwal || !data.jurusan) throw new Error("Response tidak lengkap");
+
+    const now = new Date();
+
+    // 🔥 FILTER: Hanya tampilkan jadwal yang BELUM LEPAS
+    allJadwal = data.jadwal
+      .filter(j => {
+        if (!isValidDate(j.waktu_selesai)) return false;
+        const selesai = new Date(j.waktu_selesai);
+        return selesai > now;
+      })
+      .map(j => ({ ...j, id_jurusan: Number(j.id_jurusan) }));
+
+    allJurusan = data.jurusan.map(j => ({ ...j, id_jurusan: Number(j.id_jurusan) }));
+
+    populateJurusanDropdowns();
+    renderCalendar();
+    renderAllJadwal();
+  } catch (err) {
+    console.error('ERROR LOAD:', err);
+    showToast('Gagal memuat data jadwal.', 'error');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadIncludes();
+  await loadAllJadwal();
+
+  // Close modals on outside click
+  ['modalEdit', 'modalConfirm', 'modalBulkTime', 'modalConfirmMassal'].forEach(id => {
+    document.getElementById(id).addEventListener('click', (e) => {
+      if (e.target.id === id) {
+        document.getElementById(id).classList.remove('active');
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>

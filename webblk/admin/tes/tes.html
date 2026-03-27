@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Admin</title>
+
+  <!-- CSS GLOBAL -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <?php include 'includes\pp.html'; ?>
+
+  <!-- KONTEN -->
+  <div style="margin-top:120px">
+      <h1>Dashboard</h1>
+  </div>
+
+  <!-- SCRIPT HIDE NAVBAR -->
+  <script>
+  let lastScrollY = window.scrollY;
+  const header = document.getElementById("mainHeader");
+
+  window.addEventListener("scroll", () => {
+      if (window.scrollY > lastScrollY) {
+          header.classList.add("header-hidden");
+          header.classList.remove("header-visible");
+      } else {
+          header.classList.add("header-visible");
+          header.classList.remove("header-hidden");
+      }
+      lastScrollY = window.scrollY;
+  });
+  </script>
+
+</body>
+</html>

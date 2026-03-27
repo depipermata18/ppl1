@@ -1,0 +1,326 @@
+<!-- includes/header.html -->
+<div id="page-transition" class="page-transition"></div>
+
+<header id="mainHeader" class="header-visible">
+  <div class="brand">
+    <img src="images/logo.png" alt="Logo BLK" class="logo">
+    <span class="title">Dashboard Admin</span>
+  </div>
+  <nav class="nav-right">
+    <a href="dashboard_admin.html" class="nav-link">Home</a>
+    <a href="manajemen_soal.html" class="nav-link">Kejuruan</a>
+    <div class="dropdown">
+      <button type="button" class="dropdown-toggle">
+        Kelola Data Peserta <span class="dropdown-arrow">▾</span>
+      </button>
+      <div class="dropdown-menu">
+        <a href="lihat_data_peserta.html">Lihat Data Peserta</a>
+        <a href="kelola_data_peserta.html">Manajemen Data Peserta</a>
+      </div>
+    </div>
+    <a href="kelola_jadwal.html" class="nav-link">Jadwal</a>
+    <div class="profile-section">
+      <div class="profile-dropdown">
+        <a href="#" class="profile-trigger" id="profile-trigger">
+          <img src="images/profile.png" alt="Profil" class="avatar" id="header-avatar">
+          <span class="username" id="header-username">Memuat...</span> <!-- Ganti dengan username -->
+        </a>
+        <div class="profile-menu">
+          <a href="edit_profil.html">Edit Profil</a>
+          <a href="logout.html" class="logout">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  :root {
+    --primary: #3565A5;
+    --accent: #4a7bbd;
+    --text: #1f2937;
+    --muted: #64748b;
+    --card: #ffffff;
+    --bg: #f1f5f9;
+    --shadow: 0 2px 8px rgba(53, 101, 165, 0.15);
+  }
+
+  .page-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--card);
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .page-transition.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: var(--card);
+    box-shadow: none;
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.3s, opacity 0.3s, box-shadow 0.3s;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  header.scrolled {
+    box-shadow: var(--shadow);
+  }
+
+  header.hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    box-shadow: none;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo {
+    height: 42px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .nav-link:hover {
+    color: var(--accent);
+  }
+
+  .nav-link.active::after,
+  .dropdown.active > .dropdown-toggle::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary);
+    border-radius: 1px;
+  }
+
+  .dropdown-toggle {
+    background: transparent;
+    border: none;
+    padding: 8px 12px;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--text);
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+    margin: 0;
+    line-height: 1.4;
+    position: relative;
+  }
+
+  .dropdown-toggle:hover {
+    color: var(--accent);
+  }
+
+  .dropdown-arrow {
+    font-size: 14px;
+    color: inherit;
+    transition: transform 0.2s;
+  }
+
+  .dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    background: white;
+    min-width: 210px;
+    box-shadow: var(--shadow);
+    border-radius: 8px;
+    top: 100%;
+    left: 0;
+    padding: 8px 0;
+    z-index: 1001;
+    margin-top: 0;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+
+  .dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+
+  .dropdown-menu a:hover {
+    background: #f3f4f6;
+    color: var(--primary);
+  }
+
+  .profile-section {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-left: 16px;
+  }
+
+  .profile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 24px;
+    transition: background 0.2s;
+  }
+
+  .profile-trigger:hover {
+    color: var(--accent);
+    background: rgba(74, 123, 189, 0.08);
+  }
+
+  .username {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text);
+    min-width: 80px; /* Agar tidak bergeser saat loading */
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+
+  .profile-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .profile-menu {
+    display: none;
+    position: absolute;
+    background: white;
+    min-width: 190px;
+    box-shadow: var(--shadow);
+    border-radius: 10px;
+    top: 100%;
+    right: 0;
+    padding: 8px 0;
+    z-index: 1001;
+    margin-top: 0px;
+  }
+
+  .profile-dropdown:hover .profile-menu {
+    display: block;
+  }
+
+  .profile-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .profile-menu a:hover {
+    background: #a6abb6;
+    color: var(--primary);
+  }
+
+  .logout {
+    color: #ef4444 !important;
+  }
+
+  .logout:hover {
+    color: #dc2626 !important;
+    background: #fee2e2;
+  }
+
+
+    .nav-right {
+      gap: 16px;
+    }
+
+    .profile-section {
+      gap: 10px;
+    }
+
+    .title {
+      font-size: 18px;
+    }
+
+    .logo {
+      height: 36px;
+    }
+  }
+</style>
+
+<!-- ... bagian HTML dan CSS tetap sama ... -->
+

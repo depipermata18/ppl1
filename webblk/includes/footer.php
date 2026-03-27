@@ -1,0 +1,4 @@
+<!-- includes/footer.php -->
+<footer style="text-align:center; padding:20px; background:#f6f8fb; color:#6b7280; margin-top:40px;">
+  &copy; 2025 UPT BLK Nganjuk. All Rights Reserved.
+</footer>

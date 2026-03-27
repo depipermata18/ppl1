@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Dashboard Admin – e-BLK Nganjuk</title>
+  <!-- ✅ Perbaiki spasi di URL font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #3565A5;
+      --accent: #4a7bbd;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --card: #ffffff;
+      --bg: #f1f5f9;
+      --shadow: 0 2px 8px rgba(53, 101, 165, 0.15);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+      --success: #10b981;
+      --info: #3b82f6;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      padding-top: 90px; /* Sesuaikan dengan tinggi header */
+    }
+
+    /* === ANIMASI SCROLL YANG BISA DIULANG === */
+    .animate-left,
+    .animate-right,
+    .animate-up,
+    .animate-down {
+      opacity: 0;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .animate-left { transform: translateX(-30px); }
+    .animate-right { transform: translateX(30px); }
+    .animate-up { transform: translateY(30px); }
+    .animate-down { transform: translateY(-30px); }
+    .animate-left.appear,
+    .animate-right.appear,
+    .animate-up.appear,
+    .animate-down.appear {
+      opacity: 1;
+      transform: translateX(0) translateY(0);
+    }
+
+    .interactive {
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .interactive:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(53, 101, 165, 0.25);
+    }
+    .interactive:active {
+      transform: translateY(0) scale(0.97) !important;
+      box-shadow: 0 2px 8px rgba(53, 101, 165, 0.2) !important;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 15px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 120px;
+      box-shadow: var(--shadow);
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.25); }
+    .btn:active { transform: translateY(0) scale(0.96); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-download { background: var(--success); color: white; }
+    .btn-reset { background: var(--info); color: white; }
+
+    .hero {
+      height: 90vh;
+      min-height: 350px;
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/blk.jpeg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      flex-direction: column;
+      padding: 0 20px;
+    }
+    .hero h1 {
+      font-size: 32px;
+      margin-bottom: 12px;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .hero p {
+      font-size: 16px;
+      max-width: 550px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    main {
+      padding: 30px 20px 40px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      font-size: 20px;
+      color: var(--primary);
+      margin: 24px 0 18px;
+      position: relative;
+      padding-bottom: 6px;
+    }
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 36px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    .policy {
+      background: #fffbeb;
+      border-left: 4px solid var(--warning);
+      padding: 14px;
+      border-radius: 10px;
+      margin-bottom: 22px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .calendar-clock-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      /* ❌ flex-wrap dihapus — agar tidak wrap di mobile */
+    }
+
+    .mini-calendar, .clock {
+      background: var(--card);
+      padding: 18px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      flex: 1;
+      min-width: 180px;
+      text-align: center;
+    }
+
+    .calendar-header {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .calendar-day-name {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .calendar-date {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      font-size: 13px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .calendar-date.today {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    .clock {
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timeline-section {
+      margin-bottom: 28px;
+    }
+
+    .timeline-container {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 8px 0;
+      -webkit-overflow-scrolling: touch;
+      /* ❌ Tidak di-wrap */
+    }
+
+    .timeline-jurusan {
+      min-width: 260px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      flex: 0 0 auto;
+    }
+
+    .jurusan-header {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .jadwal-item {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .chart-section {
+      display: flex;
+      gap: 20px;
+      /* ❌ flex-wrap dihapus */
+      margin-bottom: 28px;
+    }
+
+    .chart-container {
+      flex: 1;
+      min-width: 280px;
+      background: var(--card);
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .chart-title {
+      margin-bottom: 18px;
+      color: var(--primary);
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .chart-bar {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .bar-inner {
+      height: 22px;
+      background: var(--accent);
+      border-radius: 8px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .table-controls {
+      display: flex;
+      gap: 12px;
+      padding: 14px;
+      background: #f8fafc;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      /* ❌ flex-wrap dihapus */
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 160px;
+      padding: 10px 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    th {
+      background: var(--accent);
+      color: white;
+      position: sticky;
+      top: 90px;
+    }
+
+    tbody tr {
+      transition: opacity 0.3s ease, max-height 0.3s ease;
+      overflow: hidden;
+      max-height: 100px;
+    }
+
+    tbody tr:hover {
+      background: #f0f7ff;
+      transform: scale(1.005);
+    }
+
+    .status-info { color: var(--info); }
+    .status-success { color: var(--success); }
+    .status-lulus { color: #8b5cf6; }
+    .status-danger { color: var(--danger); }
+
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease;
+    }
+
+    .popup-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .popup-content {
+      background: white;
+      border-radius: 18px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      padding: 24px;
+      transform: scale(0.95);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+    }
+
+    .popup-overlay.active .popup-content {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .popup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .popup-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .popup-close {
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .popup-close:hover {
+      color: var(--text);
+      transform: rotate(90deg);
+      transition: transform 0.3s ease;
+    }
+
+    .popup-detail-item {
+      margin-bottom: 14px;
+    }
+
+    .popup-detail-label {
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .popup-detail-value {
+      font-size: 16px;
+      margin-top: 4px;
+      color: var(--text);
+    }
+
+    /* ✅ SEMUA @media DIHAPUS — TIDAK ADA RESPONSIF */
+  </style>
+</head>
+<body>
+
+<!-- Header akan dimuat di sini -->
+<div id="header-container"></div>
+
+<section class="hero">
+  <h1>Dashboard Seleksi & Pelatihan BLK Nganjuk</h1>
+  <p>Visualisasi data dan manajemen jadwal dalam satu tampilan terpadu.</p>
+</section>
+
+<main>
+  <div class="container">
+
+    <div class="policy animate-left">
+      <strong>ℹ️ Kebijakan Pendaftaran:</strong> Peserta yang keluar/drop out tidak dapat mendaftar kembali pada tahun yang sama, kecuali mengganti jurusan.
+    </div>
+
+    <div class="calendar-clock-row">
+      <div class="mini-calendar animate-left">
+        <div class="calendar-header" id="calendarMonthYear"></div>
+        <div class="calendar-grid">
+          <div class="calendar-day-name">M</div>
+          <div class="calendar-day-name">S</div>
+          <div class="calendar-day-name">R</div>
+          <div class="calendar-day-name">K</div>
+          <div class="calendar-day-name">J</div>
+          <div class="calendar-day-name">S</div>
+          <div class="calendar-day-name">M</div>
+        </div>
+        <div class="calendar-grid" id="calendarDates"></div>
+      </div>
+      <div class="clock animate-right" id="digitalClock">00:00:00</div>
+    </div>
+
+    <div class="timeline-section">
+      <h2 class="animate-down">📅 Jadwal Bulan Ini</h2>
+      <div class="timeline-container" id="timelineContainer"></div>
+    </div>
+
+    <div class="chart-section">
+      <div class="chart-container animate-left">
+        <h3 class="chart-title">Peserta per Jurusan</h3>
+        <div id="jurusanChart"></div>
+      </div>
+      <div class="chart-container animate-right">
+        <h3 class="chart-title">Status Peserta (2025)</h3>
+        <div id="statusChart"></div>
+      </div>
+    </div>
+
+    <div class="card animate-up" style="background: var(--card); border-radius: 14px; box-shadow: var(--shadow); padding: 20px;">
+      <div class="table-controls">
+        <select id="jurusanFilter" class="search-input interactive">
+          <option value="">Semua Jurusan</option>
+        </select>
+        <select id="statusFilter" class="search-input interactive">
+          <option value="">Semua Status</option>
+          <option value="aktif">Aktif</option>
+          <option value="seleksi">Seleksi</option>
+          <option value="lulus">Lulus</option>
+          <option value="drop_out">Drop Out</option>
+        </select>
+        <input type="text" id="globalSearch" class="search-input interactive" placeholder="Cari nama..." onkeyup="searchGlobal(this.value)">
+        <button class="btn btn-reset interactive" onclick="resetFilters()">
+          <i class="fas fa-redo"></i> Reset
+        </button>
+        <button class="btn btn-download interactive" onclick="downloadPDFDashboard()">
+          <i class="fas fa-file-pdf"></i> Unduh Laporan
+        </button>
+      </div>
+
+      <h2>👥 Semua Peserta (Aktif, Seleksi, Lulus)</h2>
+      <table id="table-combined">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>Jurusan</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+  </div>
+</main>
+
+<div class="popup-overlay" id="detailPopup">
+  <div class="popup-content">
+    <div class="popup-header">
+      <div class="popup-title">Detail Peserta</div>
+      <span class="popup-close" onclick="closeDetailPopup()">&times;</span>
+    </div>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<div id="footer-container"></div>
+
+<script>
+// ... (seluruh script tetap sama, tidak diubah) ...
+// Karena logika JS tidak tergantung responsif
+history.pushState(null, "", location.href);
+window.onpopstate = () => history.pushState(null, "", location.href);
+
+let currentJurusan = 'all';
+let currentStatus = 'all';
+let currentSearch = '';
+
+function setupScrollAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const el = entry.target;
+      if (entry.isIntersecting) {
+        el.classList.add('appear');
+      } else {
+        el.classList.remove('appear');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.animate-left, .animate-right, .animate-up, .animate-down, .timeline-jurusan').forEach(el => {
+    observer.observe(el);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const headerRes = await fetch('includes/header.html');
+    
+        const logoutBtn = document.getElementById("btnLogout");
+      if (logoutBtn) {
+          logoutBtn.addEventListener("click", function (e) {
+              e.preventDefault();
+              window.location.href = "logout.php";
+          });
+      }
+    
+    if (!headerRes.ok) throw new Error('Gagal muat header');
+    document.getElementById('header-container').innerHTML = await headerRes.text();
+
+    const dataRes = await fetch('dashboard_admin_api.php');
+    if (!dataRes.ok) throw new Error('Gagal ambil data dari API');
+    const data = await dataRes.json();
+
+    const avatarImg = document.getElementById('header-avatar');
+    const usernameSpan = document.getElementById('header-username');
+    
+    if (avatarImg && data.logged_in_foto_profil_path) {
+      avatarImg.src = data.logged_in_foto_profil_path;
+      avatarImg.onerror = () => avatarImg.src = 'images/profile.png';
+    }
+    
+   if (usernameSpan && data.logged_in_username) {
+      usernameSpan.textContent = data.logged_in_username;
+    } else {
+      usernameSpan.textContent = 'admin';
+    }
+
+    const jurusanSelect = document.getElementById('jurusanFilter');
+    jurusanSelect.innerHTML = '<option value="">Semua Jurusan</option>';
+    if (data.jurusan_list && Array.isArray(data.jurusan_list)) {
+      data.jurusan_list.forEach(nama => {
+        const opt = document.createElement('option');
+        opt.value = nama;
+        opt.textContent = nama;
+        jurusanSelect.appendChild(opt);
+      });
+    }
+
+    const timelineContainer = document.getElementById('timelineContainer');
+    if (data.jadwal_per_jurusan && data.jadwal_per_jurusan.length > 0) {
+      data.jadwal_per_jurusan.forEach(j => {
+        const el = document.createElement('div');
+        el.className = 'timeline-jurusan';
+        el.innerHTML = `
+          <div class="jurusan-header">${j.nama_jurusan || '—'}</div>
+          <div class="jadwal-item interactive">
+            <div class="jadwal-title">${j.nama_jadwal || '—'}</div>
+            <div class="jadwal-desc">${j.keterangan || '—'}</div>
+            <div class="jadwal-date">${j.waktu_mulai ? new Date(j.waktu_mulai).toLocaleDateString('id-ID') : '—'}</div>
+          </div>
+        `;
+        timelineContainer.appendChild(el);
+      });
+    } else {
+      timelineContainer.innerHTML = `<div style="width:100%; text-align:center; padding:30px; color:#6b7280;">Tidak ada jadwal bulan ini</div>`;
+    }
+
+    renderTable(data.all_peserta || []);
+    renderSimpleCharts(data);
+    renderMiniCalendar();
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    document.getElementById('jurusanFilter').addEventListener('change', e => {
+      currentJurusan = e.target.value || 'all';
+      filterTable();
+    });
+    document.getElementById('statusFilter').addEventListener('change', e => {
+      currentStatus = e.target.value || 'all';
+      filterTable();
+    });
+
+    setTimeout(setupScrollAnimations, 300);
+
+  } catch (err) {
+    console.error('Error:', err);
+    alert('Gagal memuat dashboard. Pastikan Anda login sebagai admin.');
+  }
+});
+
+function renderTable(peserta) {
+  const tbody = document.querySelector('#table-combined tbody');
+  tbody.innerHTML = peserta.map((p, i) => {
+    let statusHTML = '';
+    if (p.status === 'aktif') statusHTML = '<span class="status-success">Aktif</span>';
+    else if (p.status === 'seleksi') statusHTML = '<span class="status-info">Seleksi</span>';
+    else if (p.status === 'lulus') statusHTML = '<span class="status-lulus">Lulus</span>';
+    else if (p.status === 'drop_out') statusHTML = '<span class="status-danger">Drop Out</span>';
+    else statusHTML = p.status;
+
+    return `
+      <tr class="interactive" data-jurusan="${p.nama_jurusan || ''}" data-status="${p.status}" data-nama="${p.nama_peserta.toLowerCase()}" data-detail='${JSON.stringify(p)}'>
+        <td>${i + 1}</td>
+        <td>${p.nama_peserta}</td>
+        <td>${p.nama_jurusan || '—'}</td>
+        <td>${statusHTML}</td>
+      </tr>
+    `;
+  }).join('');
+
+  document.querySelectorAll('#table-combined tbody tr').forEach(row => {
+    row.addEventListener('click', () => {
+      const detail = JSON.parse(row.getAttribute('data-detail'));
+      showDetailPopup(detail);
+    });
+  });
+}
+
+function filterTable() {
+  const rows = document.querySelectorAll('#table-combined tbody tr');
+  rows.forEach(row => {
+    const jurusanMatch = currentJurusan === 'all' || row.dataset.jurusan === currentJurusan;
+    const statusMatch = currentStatus === 'all' || row.dataset.status === currentStatus;
+    const searchMatch = currentSearch === '' || row.dataset.nama.includes(currentSearch);
+    const shouldShow = jurusanMatch && statusMatch && searchMatch;
+
+    if (shouldShow) {
+      row.style.opacity = '1';
+      row.style.maxHeight = '100px';
+      row.style.pointerEvents = 'auto';
+    } else {
+      row.style.opacity = '0';
+      row.style.maxHeight = '0';
+      row.style.pointerEvents = 'none';
+    }
+  });
+}
+
+function searchGlobal(query) {
+  currentSearch = query.toLowerCase().trim();
+  filterTable();
+}
+
+function resetFilters() {
+  currentJurusan = 'all';
+  currentStatus = 'all';
+  currentSearch = '';
+  document.getElementById('jurusanFilter').value = '';
+  document.getElementById('statusFilter').value = '';
+  document.getElementById('globalSearch').value = '';
+  filterTable();
+}
+
+function showDetailPopup(p) {
+  const map = { seleksi: 'Seleksi', aktif: 'Aktif', drop_out: 'Drop Out', lulus: 'Lulus' };
+  document.getElementById('detailContent').innerHTML = `
+    <div class="popup-detail-item">
+      <div class="popup-detail-label">Nama Lengkap</div>
+      <div class="popup-detail-value">${p.nama_peserta}</div>
+    </div>
+    <div class="popup-detail-item">
+      <div class="popup-detail-label">NIK</div>
+      <div class="popup-detail-value">${p.NIK || '—'}</div>
+    </div>
+    <div class="popup-detail-item">
+      <div class="popup-detail-label">Alamat</div>
+      <div class="popup-detail-value">${p.alamat || '—'}</div>
+    </div>
+    <div class="popup-detail-item">
+      <div class="popup-detail-label">Jurusan</div>
+      <div class="popup-detail-value">${p.nama_jurusan || '—'}</div>
+    </div>
+    <div class="popup-detail-item">
+      <div class="popup-detail-label">Status</div>
+      <div class="popup-detail-value">${map[p.status] || p.status}</div>
+    </div>
+    <div class="popup-detail-item">
+      <div class="popup-detail-label">Tanggal Daftar</div>
+      <div class="popup-detail-value">${new Date(p.tgl_daftar).toLocaleDateString('id-ID')}</div>
+    </div>
+  `;
+  document.getElementById('detailPopup').classList.add('active');
+}
+
+function closeDetailPopup() {
+  document.getElementById('detailPopup').classList.remove('active');
+}
+
+document.getElementById('detailPopup').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeDetailPopup();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeDetailPopup();
+});
+
+function renderSimpleCharts(data) {
+  const jurusanChart = document.getElementById('jurusanChart');
+  const jurusanData = data.jurusan_chart || [];
+  const maxJur = Math.max(...jurusanData.map(d => d.jumlah), 1);
+  jurusanChart.innerHTML = jurusanData.map(d => `
+    <div class="chart-bar interactive">
+      <div class="bar-label">
+        <span>${d.nama_jurusan}</span>
+        <span>${d.jumlah}</span>
+      </div>
+      <div class="bar-inner" style="background: var(--accent);"></div>
+    </div>
+  `).join('');
+
+  const statusData = [
+    { label: "Aktif", value: data.status_data?.aktif || 0, color: "#10b981" },
+    { label: "Drop Out", value: data.status_data?.drop_out || 0, color: "#ef4444" },
+    { label: "Seleksi", value: data.status_data?.seleksi || 0, color: "#3b82f6" },
+    { label: "Lulus", value: data.status_data?.lulus || 0, color: "#8b5cf6" }
+  ];
+  const maxStatus = Math.max(...statusData.map(d => d.value), 1);
+  document.getElementById('statusChart').innerHTML = statusData.map(d => `
+    <div class="chart-bar interactive">
+      <div class="bar-label">
+        <span>${d.label}</span>
+        <span>${d.value}</span>
+      </div>
+      <div class="bar-inner" style="background: ${d.color};"></div>
+    </div>
+  `).join('');
+
+  setTimeout(() => {
+    document.querySelectorAll('.bar-inner').forEach((bar, i) => {
+      const width = i < jurusanData.length
+        ? (jurusanData[i].jumlah / maxJur) * 100
+        : (statusData[i - jurusanData.length].value / maxStatus) * 100;
+      bar.style.width = `${width}%`;
+    });
+  }, 600);
+}
+
+function renderMiniCalendar() {
+  const now = new Date();
+  const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+  document.getElementById('calendarMonthYear').textContent = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const today = now.getDate();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const offset = (firstDay === 0) ? 6 : firstDay - 1;
+
+  let html = '';
+  for (let i = 0; i < offset; i++) html += '<div></div>';
+  for (let d = 1; d <= daysInMonth; d++) {
+    html += `<div class="calendar-date interactive ${d === today ? 'today' : ''}">${d}</div>`;
+  }
+  document.getElementById('calendarDates').innerHTML = html;
+}
+
+function updateClock() {
+  document.getElementById('digitalClock').textContent = new Date().toLocaleTimeString('id-ID', { hour12: false });
+}
+
+function downloadPDFDashboard() {
+  let url = 'dashboard_admin_api.php?download=pdf';
+  if (currentJurusan !== 'all') url += '&jurusan=' + encodeURIComponent(currentJurusan);
+  if (currentStatus !== 'all') url += '&status=' + encodeURIComponent(currentStatus);
+  if (currentSearch) url += '&search=' + encodeURIComponent(currentSearch);
+  window.open(url, '_blank');
+}
+</script>
+
+</body>
+</html>

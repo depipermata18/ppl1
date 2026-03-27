@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manajemen Soal – e-BLK Nganjuk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #3565A5;
+      --primary-dark: #2a5285;
+      --danger: #F44336;
+      --danger-dark: #D32F2F;
+      --success: #4CAF50;
+      --success-dark: #388E3C;
+      --warning: #FF9800;
+      --warning-dark: #F57C00;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --bg: #f1f5f9;
+      --white: #ffffff;
+      --border: #e2e8f0;
+      --table-header: #f9fafb;
+      --hover-bg: #f3f4f6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    main {
+      padding: 100px 20px 40px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 15px;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      color: white;
+      min-height: 44px;
+      text-decoration: none;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .btn:hover {
+        transform: translateY(-4px) scale(1.03);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .btn:active {
+      transform: translateY(0) scale(0.97) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .btn-add {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+    }
+
+    .btn-import {
+      background: linear-gradient(135deg, var(--success), var(--success-dark));
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-update-time {
+      background: var(--warning);
+      color: #fff;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.25s ease;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+
+    .btn-update-time:hover {
+      background: var(--warning-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 14px rgba(0,0,0,0.18);
+    }
+
+    .btn-delete-selected {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .btn-delete-selected:hover {
+      background: var(--danger-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.22);
+    }
+
+    .btn-cancel { background: #6b7280; }
+    .btn-cancel:hover { background: #4b5563; }
+
+    .btn-edit {
+      background: linear-gradient(135deg, var(--warning), var(--warning-dark));
+      color: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      min-height: 40px;
+    }
+
+    .btn-hapus-aksi {
+      background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+      color: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      min-height: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .table-container { overflow-x: auto; }
+      table { min-width: 800px; }
+      .aksi-cell { flex-wrap: nowrap; }
+    }
+
+    .aksi-cell {
+      min-width: 160px;
+      text-align: center;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    tbody td {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .action-bar {
+      background: var(--white);
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .action-input {
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      min-width: 180px;
+      transition: all 0.2s ease;
+    }
+    .action-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(53, 101, 165, 0.2);
+    }
+
+    .table-container {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      overflow-x: auto;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    table {
+      min-width: 900px;
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0 6px;
+    }
+
+    thead th {
+      background: var(--table-header);
+      padding: 16px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .interactive {
+      transition: background-color 0.2s, transform 0.2s;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .interactive:hover {
+        background: var(--hover-bg);
+      }
+    }
+
+    .checkbox-cell, .no-cell, .kunci-cell, .poin-cell, .waktu-cell, .aksi-cell {
+      text-align: center;
+    }
+
+    .soal-text {
+      max-width: 300px;
+      word-break: break-word;
+    }
+
+    @media (max-width: 768px) {
+      .soal-text { max-width: 100%; }
+    }
+
+    .soal-checkbox {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .jurusan-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 24px;
+      margin-top: 28px;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .jurusan-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 28px 20px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .jurusan-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 28px rgba(0,0,0,0.15);
+        border-top: 4px solid var(--primary);
+      }
+    }
+
+    .jurusan-icon {
+      font-size: 40px;
+      color: var(--primary);
+      margin-bottom: 16px;
+      transition: transform 0.3s;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .jurusan-card:hover .jurusan-icon {
+        transform: scale(1.2) rotate(5deg);
+      }
+    }
+
+    .jurusan-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* MODAL UMUM */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(2px);
+    }
+
+    .modal-content {
+      background: var(--white);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+      width: 90%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.95);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal.show .modal-content {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .close-modal:hover {
+      color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      transition: all 0.2s ease;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(53, 101, 165, 0.2);
+    }
+
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 768px) {
+      main { padding: 80px 16px 30px; }
+      .page-title { font-size: 20px; }
+      .action-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .action-input {
+        width: 100%;
+        min-width: auto;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .jurusan-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 20px;
+      }
+      .jurusan-card {
+        padding: 24px 16px;
+      }
+      .modal-content { padding: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .jurusan-grid { grid-template-columns: 1fr; }
+      main { padding: 70px 12px 20px; }
+      .btn { padding: 14px; font-size: 16px; }
+      .modal-content { border-radius: 18px; }
+    }
+
+    /* TOAST */
+    #toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      pointer-events: none;
+      max-width: 320px;
+    }
+
+    .toast {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      border-radius: 14px;
+      color: white;
+      font-weight: 600;
+      font-size: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transform: translateX(120%) scale(0.95);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: auto;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .toast-icon {
+      font-size: 20px;
+      min-width: 24px;
+      text-align: center;
+    }
+
+    .toast-content {
+      flex: 1;
+      word-wrap: break-word;
+      line-height: 1.4;
+    }
+
+    .toast-success { background: linear-gradient(135deg, #4CAF50, #2E7D32); }
+    .toast-error { background: linear-gradient(135deg, #F44336, #C62828); }
+    .toast-info { background: linear-gradient(135deg, #3565A5, #1A3A6A); }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: translateX(0) scale(1); }
+      20% { transform: translateX(-8px) rotate(-3deg) scale(1.02); }
+      40% { transform: translateX(6px) rotate(2deg) scale(1.02); }
+      60% { transform: translateX(-4px) rotate(-1deg) scale(1.02); }
+      80% { transform: translateX(2px) rotate(0.5deg) scale(1.02); }
+    }
+
+    .toast.show.toast-success {
+      animation: wobble 0.6s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+
+<div id="header-container"></div>
+
+<main>
+  <div class="container">
+    <div id="content"></div>
+  </div>
+</main>
+
+<div id="footer-container"></div>
+
+<div id="toast-container"></div>
+
+<!-- Modal Tambah Soal -->
+<div id="tambahSoalModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">Tambah Soal Baru</div>
+      <button class="close-modal" onclick="closeModal()">&times;</button>
+    </div>
+    <form id="form-tambah-soal">
+      <input type="hidden" id="form-id-jurusan" name="id_jurusan" value="">
+      <div class="form-group">
+        <label>Soal</label>
+        <textarea class="form-control" name="soal" placeholder="Tulis soal di sini..." required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>Gambar Soal (Opsional)</label>
+        <input type="file" class="form-control" id="gambar_soal" name="gambar_soal" accept="image/*">
+        <img id="previewGambarSoal" style="display:none;max-width:220px;margin-top:12px;border-radius:14px;box-shadow:0 6px 16px rgba(0,0,0,.15)">
+      </div>
+
+      <div class="form-group">
+        <label>Opsi A</label>
+        <input type="text" class="form-control" name="opsi_a" placeholder="Opsi A" required>
+      </div>
+      <div class="form-group">
+        <label>Opsi B</label>
+        <input type="text" class="form-control" name="opsi_b" placeholder="Opsi B" required>
+      </div>
+      <div class="form-group">
+        <label>Opsi C</label>
+        <input type="text" class="form-control" name="opsi_c" placeholder="Opsi C" required>
+      </div>
+      <div class="form-group">
+        <label>Opsi D</label>
+        <input type="text" class="form-control" name="opsi_d" placeholder="Opsi D" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Kunci Jawaban</label>
+        <select class="form-control" name="kunci_jawaban" required>
+          <option value="">Pilih Kunci</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>Poin Nilai</label>
+        <input type="number" class="form-control" name="poin" min="1" value="10" required>
+      </div>
+      <div class="form-group">
+        <label>Waktu Mulai</label>
+        <input type="datetime-local" class="form-control" name="waktu_mulai" required>
+      </div>
+      <div class="form-group">
+        <label>Waktu Selesai</label>
+        <input type="datetime-local" class="form-control" name="waktu_selesai" required>
+      </div>
+    </form>
+    <div class="modal-footer">
+      <button class="btn btn-cancel" onclick="closeModal()">Batal</button>
+      <button class="btn btn-add" onclick="simpanSoal()">Simpan Soal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Import Excel -->
+<div id="importExcelModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">Import Soal dari Excel</div>
+      <button class="close-modal" onclick="closeImportExcelModal()">&times;</button>
+    </div>
+    <form id="form-import-excel" enctype="multipart/form-data">
+      <input type="hidden" name="id_jurusan" id="import-id-jurusan">
+      <div class="form-group">
+        <label>File Excel (.xls / .xlsx)</label>
+        <input type="file" name="file_excel" accept=".xls,.xlsx" class="form-control" required>
+      </div>
+    </form>
+    <div class="modal-footer">
+      <button class="btn btn-cancel" onclick="closeImportExcelModal()">Batal</button>
+      <button class="btn btn-import" onclick="importExcelSoal()">
+        <i class="fas fa-upload"></i> Import
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Konfirmasi Hapus -->
+<div id="hapusModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title" style="color: var(--danger); display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-exclamation-triangle"></i> Konfirmasi Hapus
+      </div>
+      <button onclick="hapusSoal(<?= $row['id_seleksi'] ?>)">
+  Hapus
+</button>
+    </div>
+    <div class="modal-body">
+      <p id="hapusModalMessage">Apakah Anda yakin ingin menghapus soal ini?</p>
+      <p id="hapusModalWarning" style="color: var(--danger); font-size: 14px; margin-top: 10px; display: none;">Tindakan ini tidak dapat dibatalkan.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-cancel" onclick="closeHapusModal()">Batal</button>
+      <button class="btn btn-delete-selected" id="confirmHapusBtn">Hapus</button>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ MODAL BARU: UBAH WAKTU SEMUA SOAL -->
+<div id="ubahWaktuModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">Ubah Waktu Soal</div>
+      <button class="close-modal" onclick="closeUbahWaktuModal()">&times;</button>
+    </div>
+    <div class="form-group">
+      <label>Waktu Mulai</label>
+      <input type="datetime-local" id="ubah_waktu_mulai" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label>Waktu Selesai</label>
+      <input type="datetime-local" id="ubah_waktu_selesai" class="form-control" required>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-cancel" onclick="closeUbahWaktuModal()">Batal</button>
+      <button class="btn btn-update-time" onclick="prosesUbahWaktuSemuaSoal()">
+        <i class="fas fa-save"></i> Simpan Perubahan
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentJurusanId = null;
+
+  function showToast(message, type = 'info') {
+    const icons = {
+      success: 'fas fa-check-circle',
+      error: 'fas fa-exclamation-triangle',
+      info: 'fas fa-info-circle'
+    };
+
+    const toastContainer = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `
+      <div class="toast-icon">
+        <i class="${icons[type] || icons.info}"></i>
+      </div>
+      <div class="toast-content">${message}</div>
+    `;
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 400);
+    }, 3500);
+  }
+
+  async function safeFetch(url, options = {}) {
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const text = await response.text();
+      if (!text.trim()) throw new Error("Respons kosong");
+      return JSON.parse(text);
+    } catch (error) {
+      console.error("Fetch error:", error);
+      throw error;
+    }
+  }
+
+  async function updateUserInfo() {
+    try {
+      const res = await fetch('dashboard_admin_api.php');
+      if (!res.ok) return;
+      const data = await res.json();
+      const avatar = document.getElementById('header-avatar');
+      const username = document.getElementById('header-username');
+      if (avatar && data.logged_in_foto_profil_path) {
+        avatar.src = data.logged_in_foto_profil_path;
+        avatar.onerror = () => avatar.src = 'images/profile.png';
+      }
+      if (username) {
+        username.textContent = data.logged_in_username || 'Akun';
+      }
+    } catch (err) {
+      console.error('Gagal update user:', err);
+    }
+  }
+
+  function updateHeaderFromResponse(data) {
+    updateUserInfo();
+  }
+
+  // ✅ FUNGSI BARU: BUKA MODAL UBAH WAKTU
+  function openUbahWaktuModal() {
+    if (!currentJurusanId) {
+      showToast('Harap pilih jurusan terlebih dahulu.', 'error');
+      return;
+    }
+    const modal = document.getElementById('ubahWaktuModal');
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('show'), 10);
+  }
+
+  function closeUbahWaktuModal() {
+    const modal = document.getElementById('ubahWaktuModal');
+    modal.classList.remove('show');
+    setTimeout(() => modal.style.display = 'none', 300);
+  }
+
+  // ✅ PROSES PERUBAHAN WAKTU
+  async function prosesUbahWaktuSemuaSoal() {
+    const wm = document.getElementById('ubah_waktu_mulai').value;
+    const ws = document.getElementById('ubah_waktu_selesai').value;
+
+    if (!wm || !ws) {
+      showToast('Harap isi waktu mulai dan selesai.', 'error');
+      return;
+    }
+
+    const checkedBoxes = document.querySelectorAll('.soal-checkbox:checked');
+    let ids = [];
+
+    if (checkedBoxes.length > 0) {
+      ids = Array.from(checkedBoxes).map(cb => cb.value);
+    } else {
+      const allRows = document.querySelectorAll('tbody tr[data-id-soal]');
+      if (allRows.length === 0) {
+        showToast('Tidak ada soal di jurusan ini.', 'info');
+        return;
+      }
+      ids = Array.from(allRows).map(row => row.dataset.idSoal);
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('action', 'update_time_bulk');
+      formData.append('ids', JSON.stringify(ids));
+      formData.append('waktu_mulai', wm);
+      formData.append('waktu_selesai', ws);
+      formData.append('id_jurusan', currentJurusanId);
+
+      const result = await safeFetch('manajemen_soal.php', { method: 'POST', body: formData });
+
+      if (result.success) {
+        showToast(result.success, 'success');
+        // Update tampilan
+        ids.forEach(id => {
+          const row = document.querySelector(`tr[data-id-soal="${id}"]`);
+          if (row) {
+            const waktuCell = row.querySelector('.waktu-cell');
+            if (waktuCell) {
+              const dt = new Date(wm);
+              const dt2 = new Date(ws);
+              waktuCell.innerHTML = `
+                <small>${dt.toLocaleString('id-ID')} – ${dt2.toLocaleString('id-ID')}</small>
+              `;
+            }
+          }
+        });
+        closeUbahWaktuModal();
+      } else {
+        showToast(result.error || 'Gagal memperbarui waktu.', 'error');
+      }
+    } catch (error) {
+      showToast('Gagal menghubungi server.', 'error');
+    }
+  }
+
+  // ✅ SISIPKAN TOMBOL DI ACTION BAR
+  function injectUbahWaktuButton() {
+    const actionBar = document.querySelector('.action-bar');
+    if (!actionBar || document.getElementById('btn-ubah-waktu-jurusan')) return;
+
+    const button = document.createElement('button');
+    button.id = 'btn-ubah-waktu-jurusan';
+    button.className = 'btn btn-update-time';
+    button.innerHTML = '<i class="fas fa-clock"></i> Ubah Waktu Semua Soal';
+    button.addEventListener('click', openUbahWaktuModal);
+    actionBar.appendChild(button);
+  }
+
+  async function init() {
+    try {
+      const [headerRes, footerRes] = await Promise.all([
+        fetch('includes/header.html'),
+        fetch('includes/footer.html')
+      ]);
+      if (!headerRes.ok || !footerRes.ok) throw new Error('Gagal muat header/footer');
+      document.getElementById('header-container').innerHTML = await headerRes.text();
+      document.getElementById('footer-container').innerHTML = await footerRes.text();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const id_jurusan = urlParams.get('id_jurusan');
+      if (id_jurusan) {
+        currentJurusanId = id_jurusan;
+      }
+
+      const res = await fetch(id_jurusan 
+        ? `manajemen_soal.php?id_jurusan=${id_jurusan}` 
+        : 'manajemen_soal.php'
+      );
+      if (!res.ok) throw new Error('Gagal ambil data');
+      const data = await res.json();
+      
+      updateHeaderFromResponse(data);
+      document.getElementById('content').innerHTML = data.html;
+      applyInteractive();
+      setupEventListeners();
+
+      if (currentJurusanId) {
+        injectUbahWaktuButton(); // 🔥 Tambahkan tombol
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      window.location.href = "login.html";
+    }
+  }
+
+  function applyInteractive() {
+    const selectors = ['.btn', '.btn-edit', 'tbody tr', '.jurusan-card'];
+    selectors.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        el.classList.add('interactive');
+      });
+    });
+
+    const tambahSoalBtn = document.querySelector('.btn-add');
+    if (tambahSoalBtn && !tambahSoalBtn.classList.contains('gemoy-applied')) {
+      tambahSoalBtn.classList.add('gemoy-applied');
+      tambahSoalBtn.addEventListener('mouseenter', () => {
+        tambahSoalBtn.style.transform = 'translateY(-6px) scale(1.05)';
+      });
+      tambahSoalBtn.addEventListener('mouseleave', () => {
+        tambahSoalBtn.style.transform = 'translateY(0) scale(1)';
+      });
+      tambahSoalBtn.addEventListener('mousedown', () => {
+        tambahSoalBtn.style.transform = 'translateY(0) scale(0.95)';
+      });
+      tambahSoalBtn.addEventListener('mouseup', () => {
+        if (tambahSoalBtn.matches(':hover')) {
+          tambahSoalBtn.style.transform = 'translateY(-6px) scale(1.05)';
+        } else {
+          tambahSoalBtn.style.transform = 'translateY(0) scale(1)';
+        }
+      });
+    }
+  }
+
+  function setupEventListeners() {
+    const selectAllCheckbox = document.getElementById('select-all');
+    if (selectAllCheckbox) {
+      selectAllCheckbox.addEventListener('change', function() {
+        document.querySelectorAll('.soal-checkbox').forEach(checkbox => {
+          checkbox.checked = this.checked;
+        });
+      });
+    }
+    document.querySelector('.btn-delete-selected')?.addEventListener('click', hapusTerpilih);
+  }
+
+  // ... (fungsi lain seperti closeModal, simpanSoal, hapusSoal, hapusTerpilih, importExcelSoal, dll tetap sama)
+
+  function openModal() {
+    const modal = document.getElementById('tambahSoalModal');
+    if(currentJurusanId) {
+      document.getElementById('form-id-jurusan').value = currentJurusanId;
+    }
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('show'), 10);
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('tambahSoalModal');
+    modal.classList.remove('show');
+    setTimeout(() => modal.style.display = 'none', 300);
+    document.getElementById('form-tambah-soal').reset();
+  }
+
+  async function simpanSoal() {
+    const form = document.getElementById('form-tambah-soal');
+    const formData = new FormData(form);
+    try {
+      const result = await safeFetch('manajemen_soal.php', { method: 'POST', body: formData });
+      if (result.success) {
+        showToast(result.success, 'success');
+        closeModal();
+        init();
+      } else {
+        showToast(result.error || 'Terjadi kesalahan', 'error');
+      }
+    } catch (err) {
+      showToast('Gagal menghubungi server', 'error');
+    }
+  }
+
+  let pendingDeleteAction = null;
+
+  function openHapusModal(message, warning = true, action) {
+    pendingDeleteAction = action;
+    document.getElementById('hapusModalMessage').textContent = message;
+    document.getElementById('hapusModalWarning').style.display = warning ? 'block' : 'none';
+    const modal = document.getElementById('hapusModal');
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('show'), 10);
+  }
+
+  function closeHapusModal() {
+    const modal = document.getElementById('hapusModal');
+    modal.classList.remove('show');
+    setTimeout(() => modal.style.display = 'none', 300);
+    pendingDeleteAction = null;
+  }
+
+  document.getElementById('confirmHapusBtn').addEventListener('click', function() {
+    if (pendingDeleteAction) pendingDeleteAction();
+    closeHapusModal();
+  });
+
+  function hapusSoal(idSoal) {
+  if (!idSoal) {
+    showToast("Data soal tidak valid.", "error");
+    return;
+  }
+
+  openHapusModal(
+    "Apakah kamu yakin ingin menghapus soal ini? 😢",
+    true,
+    async () => {
+      try {
+        const result = await safeFetch('manajemen_soal.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `hapus_id=${encodeURIComponent(idSoal)}`
+        });
+
+        if (result.success) {
+          showToast("Soal berhasil dihapus! 🥺✨", "success");
+          const row = document.querySelector(`tr[data-id-soal="${idSoal}"]`);
+          if (row) row.remove();
+        } else {
+          showToast(result.error || "Gagal menghapus soal.", "error");
+        }
+      } catch (error) {
+        showToast("Terjadi kesalahan server. Coba lagi nanti.", "error");
+      }
+    }
+  );
+}
+
+  async function hapusTerpilih() {
+  const checkedBoxes = document.querySelectorAll('.soal-checkbox:checked');
+  if (checkedBoxes.length === 0) {
+    showToast('Pilih soal yang akan dihapus.', 'error');
+    return;
+  }
+
+  openHapusModal(
+    `Hapus ${checkedBoxes.length} soal terpilih?`,
+    true,
+    async () => {
+      let successCount = 0;
+
+      for (const checkbox of checkedBoxes) {
+        const id = checkbox.value;
+        try {
+          const result = await safeFetch('manajemen_soal.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `hapus_id=${id}`
+          });
+          if (result.success) successCount++;
+        } catch (e) {}
+      }
+
+      if (successCount > 0) {
+        checkedBoxes.forEach(cb => {
+          const row = cb.closest('tr');
+          if (row) row.remove();
+        });
+        document.getElementById('select-all').checked = false;
+        showToast(`Berhasil hapus ${successCount} soal.`, 'success');
+      } else {
+        showToast('Gagal menghapus soal.', 'error');
+      }
+    }
+  );
+}
+
+  function openImportExcelModal() {
+    if (currentJurusanId) {
+      document.getElementById('import-id-jurusan').value = currentJurusanId;
+    }
+    const modal = document.getElementById('importExcelModal');
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('show'), 10);
+  }
+
+  function closeImportExcelModal() {
+    const modal = document.getElementById('importExcelModal');
+    modal.classList.remove('show');
+    setTimeout(() => modal.style.display = 'none', 300);
+  }
+
+  async function importExcelSoal() {
+    const form = document.getElementById('form-import-excel');
+    const formData = new FormData(form);
+    try {
+      const result = await safeFetch('import_soal_excel.php', { method: 'POST', body: formData });
+      if (result.status === 'success') {
+        showToast(`Berhasil import ${result.inserted} soal`, 'success');
+        closeImportExcelModal();
+        init();
+      } else {
+        showToast(result.message || 'Gagal import Excel', 'error');
+      }
+    } catch (err) {
+      showToast('Gagal menghubungi server', 'error');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+
+  window.onclick = function(e) {
+    const modals = ['tambahSoalModal', 'importExcelModal', 'hapusModal', 'ubahWaktuModal'];
+    modals.forEach(id => {
+      const modal = document.getElementById(id);
+      if (modal && e.target === modal) {
+        if (id === 'ubahWaktuModal') closeUbahWaktuModal();
+        else if (id === 'tambahSoalModal') closeModal();
+        else if (id === 'importExcelModal') closeImportExcelModal();
+        else closeHapusModal();
+      }
+    });
+  };
+
+  document.addEventListener('change', function (e) {
+    if (e.target.id === 'gambar_soal') {
+      const file = e.target.files[0];
+      const preview = document.getElementById('previewGambarSoal');
+      if (!file) {
+        preview.style.display = 'none';
+        return;
+      }
+      if (!file.type.startsWith('image/')) {
+        showToast('File harus berupa gambar!', 'error');
+        e.target.value = '';
+        preview.style.display = 'none';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function (ev) {
+        preview.src = ev.target.result;
+        preview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
+
+</body>
+</html>

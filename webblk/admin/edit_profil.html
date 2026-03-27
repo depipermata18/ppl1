@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profil Saya – e-BLK Nganjuk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2F5FA9;
+      --primary-light: #4E7DCA;
+      --primary-soft: rgba(47, 95, 169, 0.15);
+      --primary-dim: rgba(47, 95, 169, 0.08);
+      --text: #1e293b;
+      --text-light: #64748b;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --bg-gradient: linear-gradient(135deg, #e0ecff, #d0e0ff);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      --border: 1px solid rgba(255, 255, 255, 0.3);
+      --transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+      padding-top: 80px;
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* === NOTIFIKASI DI POJOK KANAN ATAS === */
+    #alert-box {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 2000;
+      max-width: 350px;
+      width: 100%;
+      padding: 16px 24px;
+      border-radius: 14px;
+      font-weight: 500;
+      font-size: 15px;
+      border-left: 5px solid #10b981;
+      background: #ecfdf5;
+      color: #0f5132;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    #alert-box.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #alert-box.alert-error {
+      background: #fef2f2;
+      color: #b91c1c;
+      border-left-color: #ef4444;
+    }
+
+    /* === JUDUL UTAMA === */
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 30px 0 30px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeSlideDown 0.6s forwards 0.1s;
+    }
+
+    @keyframes fadeSlideDown {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* === CARD PROFIL === */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      padding: 50px 45px;
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      border: var(--border);
+      margin-bottom: 50px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.7s forwards 0.2s;
+    }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 8px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--primary-light));
+      border-radius: 8px 0 0 8px;
+    }
+
+    /* Avatar Section */
+    .profil-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 40px;
+    }
+
+    .profil-avatar-container {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(47, 95, 169, 0.2);
+      transition: var(--transition);
+    }
+
+    .profil-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border: 5px solid #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .profil-avatar:hover {
+      transform: scale(1.08);
+      box-shadow: 0 14px 35px rgba(47, 95, 169, 0.25);
+    }
+
+    .upload-btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 24px rgba(47, 95, 169, 0.3);
+      transition: var(--transition);
+    }
+
+    .upload-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(47, 95, 169, 0.4);
+    }
+
+    /* Jurusan Card */
+    .jurusan-card {
+      background: linear-gradient(135deg, var(--primary-soft), transparent);
+      border: 2px dashed rgba(47, 95, 169, 0.2);
+      border-radius: 20px;
+      padding: 24px 30px;
+      margin: 30px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .jurusan-icon {
+      font-size: 40px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .jurusan-label {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .jurusan-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 6px;
+    }
+
+    /* Info Rows */
+    .info-row {
+      display: flex;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+      transition: var(--transition);
+    }
+
+    .info-row:hover {
+      background: rgba(47, 95, 169, 0.03);
+      border-radius: 8px;
+    }
+
+    .info-label {
+      width: 200px;
+      font-weight: 600;
+      color: var(--text-light);
+      font-size: 15px;
+    }
+
+    .info-value {
+      flex: 1;
+      font-weight: 500;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    /* Tombol Ganti Password */
+    .password-btn {
+      background: var(--primary);
+      color: #fff;
+      padding: 16px;
+      border-radius: 16px;
+      font-size: 17px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 8px 24px rgba(47, 95, 169, 0.3);
+      transition: var(--transition);
+      margin-top: 30px;
+      width: 100%;
+    }
+
+    .password-btn:hover {
+      background: var(--primary-light);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(47, 95, 169, 0.4);
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      margin: 12% auto;
+      padding: 40px;
+      border-radius: 24px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+      position: relative;
+      backdrop-filter: blur(10px);
+      border: var(--border);
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .close-modal {
+      color: var(--text-light);
+      float: right;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      transition: var(--transition);
+    }
+
+    .close-modal:hover {
+      color: var(--primary);
+      transform: rotate(90deg);
+    }
+
+    .modal-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+      position: relative;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 15px 50px 15px 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.8);
+      transition: var(--transition);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
+
+    /* Ikon Show/Hide Password */
+    .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 42px;
+      cursor: pointer;
+      color: var(--text-light);
+      transition: var(--transition);
+    }
+
+    .toggle-password:hover {
+      color: var(--primary);
+    }
+
+    .btn-save-password {
+      width: 100%;
+      padding: 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-save-password:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 600px) {
+      body { padding-top: 70px; }
+      .card { padding: 36px 28px; border-radius: 24px; }
+      .page-title { font-size: 28px; }
+      .profil-avatar-container { width: 130px; height: 130px; }
+      .upload-btn, .password-btn { font-size: 15px; padding: 12px 24px; }
+      .info-label { width: 180px; font-size: 14px; }
+      .jurusan-icon { font-size: 34px; }
+      .jurusan-value { font-size: 18px; }
+      .modal-content { padding: 30px 24px; }
+      #alert-box { right: 10px; left: 10px; max-width: none; }
+      .toggle-password { top: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER & FOOTER PLACEHOLDERS -->
+<div id="header-placeholder"></div>
+<div id="alert-box"></div>
+
+<main class="container">
+  <h1 class="page-title">
+    <i class="fas fa-user-circle"></i> Profil Saya
+  </h1>
+
+  <div class="card">
+    <div class="profil-header">
+      <div class="profil-avatar-container">
+        <img src="images/profile.png" alt="Foto Profil" class="profil-avatar" id="previewFoto">
+      </div>
+      <button type="button" class="upload-btn" onclick="document.getElementById('fotoInput').click()">
+        <i class="fas fa-camera"></i> Ganti Foto Profil
+      </button>
+      <input type="file" id="fotoInput" accept="image/jpeg,image/png" style="display:none;">
+    </div>
+
+    <div class="jurusan-card">
+      <i class="fas fa-graduation-cap jurusan-icon"></i>
+      <div class="jurusan-label">Jurusan yang Diampu</div>
+      <div class="jurusan-value" id="nama_jurusan">Memuat...</div>
+    </div>
+
+    <div class="info-row">
+      <div class="info-label">Nama Lengkap</div>
+      <div class="info-value" id="nama_admin">-</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Username</div>
+      <div class="info-value" id="username">-</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Email</div>
+      <div class="info-value" id="email">-</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Tanggal Lahir</div>
+      <div class="info-value" id="tgl_lahir">-</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Jenis Kelamin</div>
+      <div class="info-value" id="jenis_kelamin">-</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">No. HP</div>
+      <div class="info-value" id="no_hp">-</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Role</div>
+      <div class="info-value" id="role">-</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Status</div>
+      <div class="info-value" id="status">-</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Alamat</div>
+      <div class="info-value" id="alamat">-</div>
+    </div>
+
+    <button type="button" class="password-btn" id="changePasswordBtn">
+      <i class="fas fa-key"></i> Ganti Password
+    </button>
+    <button type="button" class="password-btn" onclick="window.location.href='logout.php'">
+  <i class="fas fa-sign-out-alt"></i> Logout
+</button>
+
+  </div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<!-- Modal Ganti Password -->
+<div id="passwordModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" id="closePasswordModal">&times;</span>
+    <h2 class="modal-title">Ganti Password</h2>
+    <form id="changePasswordForm">
+      <div class="form-group">
+        <label for="newPassword">Password Baru</label>
+        <input type="password" id="newPassword" name="newPassword" placeholder="Minimal 6 karakter" required>
+        <i class="fas fa-eye toggle-password" id="toggleNewPassword"></i>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Konfirmasi Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Ulangi password baru" required>
+        <i class="fas fa-eye toggle-password" id="toggleConfirmPassword"></i>
+      </div>
+      <button type="submit" class="btn-save-password">Simpan Password</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // === FUNGSI NOTIFIKASI ===
+  function showAlert(message, isSuccess = true) {
+    const box = document.getElementById('alert-box');
+    box.textContent = message;
+    box.className = isSuccess ? 'show' : 'alert-error show';
+    box.style.display = 'block';
+    setTimeout(() => {
+      box.classList.remove('show');
+      setTimeout(() => box.style.display = 'none', 300);
+    }, 4000);
+  }
+
+  // === CEK AUTH ===
+  async function checkAuth() {
+    try {
+      const res = await fetch('edit_profil.php', { method: 'GET', credentials: 'include' });
+      if (res.status === 403) {
+        window.location.replace('login.html');
+        return false;
+      }
+      return true;
+    } catch {
+      window.location.replace('login.html');
+      return false;
+    }
+  }
+
+  // === MUAT HEADER & FOOTER ===
+  async function loadIncludes() {
+    try {
+      const [headerRes, footerRes] = await Promise.all([
+        fetch('includes/header.html'),
+        fetch('includes/footer.html')
+      ]);
+      if (headerRes.ok) document.getElementById('header-placeholder').innerHTML = await headerRes.text();
+      if (footerRes.ok) document.getElementById('footer-placeholder').innerHTML = await footerRes.text();
+
+      // Update header user
+      const userRes = await fetch('dashboard_admin_api.php');
+      if (userRes.ok) {
+        const userData = await userRes.json();
+        const avatar = document.getElementById('header-avatar');
+        const username = document.getElementById('header-username');
+
+        if (avatar && userData.logged_in_foto_profil_path) {
+          avatar.src = userData.logged_in_foto_profil_path;
+          avatar.onerror = () => avatar.src = 'images/profile.png';
+        }
+        if (username) {
+          username.textContent = userData.logged_in_username || 'Akun';
+        }
+      }
+    } catch (err) {
+      console.warn('Gagal muat header/footer/user data:', err);
+    }
+  }
+
+  // === MUAT DATA PROFIL ===
+  async function loadProfil() {
+    if (!(await checkAuth())) return;
+
+    try {
+      const res = await fetch('edit_profil.php', { method: 'GET', credentials: 'include' });
+      const data = await res.json();
+
+      if (data.error) throw new Error(data.error);
+      const a = data.admin;
+
+      document.getElementById('nama_admin').textContent = a.nama_admin || '-';
+      document.getElementById('username').textContent = a.username || '-';
+      document.getElementById('email').textContent = a.email || '-';
+      document.getElementById('tgl_lahir').textContent = a.tgl_lahir
+        ? new Date(a.tgl_lahir).toLocaleDateString('id-ID')
+        : '-';
+      document.getElementById('jenis_kelamin').textContent = 
+        a.jenis_kelamin === 'L' ? 'Laki-laki' : a.jenis_kelamin === 'P' ? 'Perempuan' : '-';
+      document.getElementById('no_hp').textContent = a.no_hp || '-';
+      document.getElementById('role').textContent = a.role || '-';
+      document.getElementById('status').textContent = a.status || '-';
+      document.getElementById('alamat').textContent = a.alamat || '-';
+      document.getElementById('nama_jurusan').textContent = a.nama_jurusan || 'Belum Ditentukan';
+
+      const fotoPath = a.foto_profil_path || 'images/profile.png';
+      document.getElementById('previewFoto').src = fotoPath;
+    } catch (err) {
+      console.error('Error:', err);
+      showAlert('Gagal memuat data profil.', false);
+    }
+  }
+
+  // === UPLOAD FOTO ===
+  document.getElementById('fotoInput').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('foto_profil', file);
+
+    try {
+      const res = await fetch('edit_profil.php', {
+        method: 'POST',
+        credentials: 'include',
+        body: formData
+      });
+      const result = await res.json();
+
+      if (result.success) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const img = document.getElementById('previewFoto');
+          img.src = reader.result;
+          img.style.transform = 'scale(1.1)';
+          setTimeout(() => img.style.transform = 'scale(1)', 300);
+        };
+        reader.readAsDataURL(file);
+        showAlert('Foto profil berhasil diperbarui!');
+      } else {
+        showAlert(result.error || 'Gagal mengganti foto.', false);
+      }
+    } catch {
+      showAlert('Gagal mengunggah foto.', false);
+    }
+  });
+
+  // === MODAL & PASSWORD ===
+  const modal = document.getElementById('passwordModal');
+  document.getElementById('changePasswordBtn').addEventListener('click', () => {
+    modal.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  document.getElementById('closePasswordModal').addEventListener('click', () => modal.style.display = 'none');
+  window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+
+  document.getElementById('toggleNewPassword').addEventListener('click', function () {
+    const input = document.getElementById('newPassword');
+    input.type = input.type === 'password' ? 'text' : 'password';
+    this.classList.toggle('fa-eye');
+    this.classList.toggle('fa-eye-slash');
+  });
+  document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
+    const input = document.getElementById('confirmPassword');
+    input.type = input.type === 'password' ? 'text' : 'password';
+    this.classList.toggle('fa-eye');
+    this.classList.toggle('fa-eye-slash');
+  });
+
+  document.getElementById('changePasswordForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const np = document.getElementById('newPassword').value;
+    const cp = document.getElementById('confirmPassword').value;
+
+    if (np !== cp) return showAlert('Password tidak cocok.', false);
+    if (np.length < 6) return showAlert('Password minimal 6 karakter.', false);
+
+    try {
+      const res = await fetch('edit_profil.php', {
+        method: 'PUT',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: np })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        showAlert('Password berhasil diperbarui.');
+        document.getElementById('changePasswordForm').reset();
+        modal.style.display = 'none';
+      } else {
+        showAlert(data.error || 'Gagal mengganti password.', false);
+      }
+    } catch {
+      showAlert('Terjadi kesalahan saat mengganti password.', false);
+    }
+  });
+
+  // === INISIALISASI ===
+  document.addEventListener('DOMContentLoaded', async () => {
+    history.pushState(null, null, location.href);
+    window.onpopstate = () => history.go(1);
+
+    await loadIncludes();
+    loadProfil();
+  });
+</script>
+
+</body>
+</html>

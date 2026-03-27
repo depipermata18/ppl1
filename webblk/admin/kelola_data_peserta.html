@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kelola Data Peserta – e-BLK Nganjuk</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+--primary: #3565A5;
+--primary-dark: #2a5284;
+--accent: #4a7bbd;
+--text: #1f2937;
+--muted: #6b7280;
+--card: #ffffff;
+--bg: #f8fafc;
+--border: #e2e8f0;
+--shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+--success: #10b981;
+--info: #3b82f6;
+--warning: #f59e0b;
+--danger: #ef4444;
+--transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+body {
+background: var(--bg);
+color: var(--text);
+line-height: 1.6;
+padding-top: 80px;
+overflow-x: hidden;
+}
+.hero {
+padding: 50px 24px;
+background: linear-gradient(135deg, var(--primary), #2c5282);
+position: relative;
+overflow: hidden;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+text-align: center;
+color: white;
+}
+.hero::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background:
+radial-gradient(circle at 10% 20%, rgba(255,255,255,0.1) 0%, transparent 20%),
+radial-gradient(circle at 90% 80%, rgba(255,255,255,0.08) 0%, transparent 20%);
+z-index: 0;
+}
+.hero-content {
+position: relative;
+z-index: 1;
+max-width: 800px;
+}
+.hero h1 {
+font-size: 2.5rem;
+font-weight: 700;
+margin-bottom: 12px;
+text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.hero p {
+font-size: 1.1rem;
+opacity: 0.95;
+max-width: 600px;
+margin: 0 auto;
+}
+main {
+padding: 30px 24px 40px;
+}
+.container {
+max-width: 1400px;
+margin: 0 auto;
+}
+.section-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 24px;
+flex-wrap: wrap;
+gap: 16px;
+}
+.section-title {
+font-size: 1.5rem;
+font-weight: 700;
+color: var(--primary);
+display: flex;
+align-items: center;
+gap: 12px;
+}
+.controls {
+display: flex;
+gap: 12px;
+flex-wrap: wrap;
+}
+.btn {
+padding: 12px 24px;
+border: none;
+border-radius: 12px;
+font-weight: 600;
+cursor: pointer;
+font-size: 15px;
+display: inline-flex;
+align-items: center;
+gap: 10px;
+transition: var(--transition);
+box-shadow: var(--shadow);
+}
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-dark); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.btn-success { background: var(--success); color: white; }
+.btn-success:hover { background: #0da26f; transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.btn-danger { background: var(--danger); color: white; }
+.btn-danger:hover { background: #dc2626; transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.search-filter {
+background: white;
+border-radius: 18px;
+padding: 24px;
+margin-bottom: 28px;
+box-shadow: var(--shadow);
+display: flex;
+gap: 16px;
+flex-wrap: wrap;
+align-items: center;
+border: 1px solid rgba(226, 232, 240, 0.7);
+}
+.search-box {
+flex: 1;
+min-width: 280px;
+position: relative;
+}
+.search-box i {
+position: absolute;
+left: 16px;
+top: 50%;
+transform: translateY(-50%);
+color: var(--muted);
+}
+.search-input {
+width: 100%;
+padding: 14px 16px 14px 48px;
+border: 1px solid var(--border);
+border-radius: 14px;
+font-size: 16px;
+outline: none;
+transition: var(--transition);
+background: #f8fafc;
+}
+.search-input:focus {
+border-color: var(--primary);
+box-shadow: 0 0 0 3px rgba(53, 101, 165, 0.2);
+}
+.filter-select {
+padding: 14px 18px;
+border: 1px solid var(--border);
+border-radius: 14px;
+font-size: 16px;
+background: white;
+cursor: pointer;
+min-width: 220px;
+transition: var(--transition);
+}
+.filter-select:focus {
+border-color: var(--primary);
+box-shadow: 0 0 0 3px rgba(53, 101, 165, 0.2);
+}
+.data-card {
+background: white;
+border-radius: 20px;
+overflow: hidden;
+box-shadow: var(--shadow-lg);
+border: 1px solid rgba(226, 232, 240, 0.8);
+opacity: 0;
+transform: translateY(20px);
+animation: fadeInUp 0.6s ease forwards;
+}
+@keyframes fadeInUp {
+to { opacity: 1; transform: translateY(0); }
+}
+table {
+width: 100%;
+border-collapse: collapse;
+}
+th, td {
+padding: 18px 24px;
+text-align: left;
+border-bottom: 1px solid var(--border);
+}
+th {
+background: #f8fafc;
+font-weight: 700;
+color: var(--text);
+font-size: 14px;
+text-transform: uppercase;
+letter-spacing: 0.8px;
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) { background: #fafcff; }
+tr:hover { background: #f0f7ff !important; transform: scale(1.005); transition: transform 0.2s ease; }
+.status-badge {
+padding: 8px 16px;
+border-radius: 50px;
+font-size: 13px;
+font-weight: 600;
+display: inline-block;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+.status-seleksi { background: rgba(59, 130, 246, 0.15); color: var(--info); }
+.status-aktif { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+.status-drop-out { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+.status-lulus { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+.action-cell {
+display: flex;
+gap: 12px;
+}
+.btn-modern {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+padding: 10px 20px;
+border: none;
+border-radius: 10px;
+font-weight: 600;
+cursor: pointer;
+transition: var(--transition);
+box-shadow: var(--shadow);
+font-size: 15px;
+}
+.btn-primary-modern { background: var(--primary); color: white; }
+.btn-primary-modern:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.btn-warning-modern { background: var(--warning); color: white; }
+.btn-warning-modern:hover { background: #d17f0b; transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.btn-success-modern { background: var(--success); color: white; }
+.btn-success-modern:hover { background: #0da26f; transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.btn-danger-modern { background: var(--danger); color: white; }
+.btn-danger-modern:hover { background: #dc2626; transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.btn-icon { font-size: 16px; margin-right: 4px; }
+/* Checkbox styling */
+.checkbox-cell {
+width: 40px;
+text-align: center;
+}
+.checkbox-cell input[type="checkbox"] {
+width: 18px;
+height: 18px;
+cursor: pointer;
+}
+/* Mass action bar */
+.mass-actions {
+display: flex;
+gap: 12px;
+margin-top: 16px;
+padding: 16px;
+background: #f8fafc;
+border-radius: 12px;
+box-shadow: var(--shadow);
+align-items: center;
+}
+.mass-actions select {
+padding: 10px 16px;
+border: 1px solid var(--border);
+border-radius: 8px;
+font-size: 15px;
+min-width: 180px;
+}
+.modal {
+display: none;
+position: fixed;
+z-index: 2000;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.6);
+backdrop-filter: blur(4px);
+animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal-content {
+background: white;
+margin: 5% auto;
+padding: 32px;
+border-radius: 20px;
+width: 90%;
+max-width: 600px;
+max-height: 85vh;
+overflow-y: auto;
+box-shadow: var(--shadow-lg);
+transform: scale(0.95);
+animation: popIn 0.4s ease forwards;
+}
+@keyframes popIn { to { transform: scale(1); } }
+.modal-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 24px;
+}
+.modal-title {
+font-size: 1.5rem;
+font-weight: 700;
+color: var(--primary);
+}
+.close {
+font-size: 28px;
+cursor: pointer;
+color: #94a3b8;
+transition: var(--transition);
+}
+.close:hover {
+color: var(--text);
+transform: rotate(90deg);
+}
+.form-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+gap: 20px;
+}
+.form-group {
+margin-bottom: 16px;
+}
+.form-group label {
+display: block;
+margin-bottom: 8px;
+font-weight: 600;
+color: var(--text);
+font-size: 14px;
+}
+.form-control, .form-control-textarea {
+width: 100%;
+padding: 12px 16px;
+border: 1px solid var(--border);
+border-radius: 12px;
+font-size: 15px;
+transition: var(--transition);
+}
+.form-control:focus, .form-control-textarea:focus {
+border-color: var(--primary);
+box-shadow: 0 0 0 3px rgba(53, 101, 165, 0.2);
+outline: none;
+}
+/* === PAGINATION STYLE === */
+.pagination-controls {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 12px;
+margin-top: 28px;
+background: #f8fafc;
+padding: 16px 24px;
+border-radius: 16px;
+box-shadow: var(--shadow);
+}
+.pagination-btn {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+background: var(--primary);
+color: white;
+border: none;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: var(--transition);
+font-size: 16px;
+}
+.pagination-btn:hover:not(:disabled) {
+background: var(--primary-dark);
+transform: translateY(-2px);
+box-shadow: 0 4px 10px rgba(53, 101, 165, 0.3);
+}
+.pagination-btn:disabled {
+opacity: 0.5;
+cursor: not-allowed;
+transform: none;
+}
+.pagination-input {
+width: 50px;
+padding: 8px 12px;
+border: 1px solid #cbd5e1;
+border-radius: 8px;
+text-align: center;
+font-weight: 600;
+transition: var(--transition);
+}
+.pagination-input:focus {
+border-color: var(--primary);
+box-shadow: 0 0 0 3px rgba(53, 101, 165, 0.15);
+}
+.pagination-go-btn {
+padding: 8px 16px;
+background: var(--primary);
+color: white;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+font-size: 14px;
+transition: var(--transition);
+}
+.pagination-go-btn:hover {
+background: var(--primary-dark);
+}
+.pagination-info {
+font-weight: 600;
+color: var(--text);
+font-size: 15px;
+}
+@media (max-width: 768px) {
+.hero h1 { font-size: 2rem; }
+.search-filter { flex-direction: column; }
+.search-box, .controls { width: 100%; }
+.btn { width: 100%; justify-content: center; }
+.modal-content { padding: 24px; }
+.btn-modern {
+width: 100%;
+justify-content: center;
+padding: 12px;
+font-size: 14px;
+}
+.mass-actions {
+flex-direction: column;
+align-items: stretch;
+}
+.mass-actions select, .mass-actions .btn {
+width: 100%;
+}
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+<div class="hero-content">
+<h1><i class="fas fa-users-cog"></i> Kelola Data Peserta</h1>
+<p>Sistem manajemen peserta pelatihan BLK Nganjuk yang modern dan responsif</p>
+</div>
+</section>
+
+<main>
+<div class="container">
+
+<div class="section-header">
+<div class="section-title">
+<i class="fas fa-list-check"></i> Daftar Peserta
+</div>
+<div class="controls">
+<button class="btn btn-primary" onclick="openModal('tambah')">
+<i class="fas fa-plus-circle"></i> Tambah Peserta
+</button>
+<button class="btn btn-success" onclick="openModal('import')">
+<i class="fas fa-file-excel"></i> Impor Excel
+</button>
+</div>
+</div>
+
+<div class="search-filter">
+<div class="search-box">
+<i class="fas fa-search"></i>
+<input type="text" id="searchInput" class="search-input" placeholder="Cari nama, NIK, jurusan...">
+</div>
+<select id="filterJurusan" class="filter-select">
+<option value="all">Semua Jurusan</option>
+</select>
+</div>
+
+<div class="data-card">
+<!-- Mass Actions Bar -->
+<div class="mass-actions">
+<select id="massStatus">
+<option value="">-- Ubah Status Massal --</option>
+<option value="seleksi">Seleksi</option>
+<option value="aktif">Aktif</option>
+<option value="drop_out">Drop Out</option>
+<option value="lulus">Lulus</option>
+</select>
+<button class="btn btn-primary" onclick="updateMassStatus()">
+<i class="fas fa-sync-alt"></i> Update Status
+</button>
+<button class="btn btn-danger" onclick="confirmMassDelete()">
+<i class="fas fa-trash"></i> Hapus Terpilih
+</button>
+</div>
+
+<table>
+<thead>
+<tr>
+<th class="checkbox-cell">
+<input type="checkbox" id="selectAll" onclick="toggleSelectAll()">
+</th>
+<th>No</th>
+<th>Nama</th>
+<th>NIK</th>
+<th>No. Pendaftaran</th> <!-- 🔸 BARU -->
+<th>Jurusan</th>
+<th>Status</th>
+<th>Aksi</th>
+</tr>
+</thead>
+<tbody id="pesertaTableBody">
+<tr>
+<td colspan="8" style="text-align:center; padding:50px; color:var(--muted);">
+<i class="fas fa-spinner fa-spin" style="font-size:3rem; margin-bottom:16px;"></i><br>
+<span style="font-size:1.2rem; font-weight:500;">Memuat data...</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- MODAL TAMBAH -->
+<div id="modal-tambah" class="modal">
+<div class="modal-content">
+<div class="modal-header">
+<div class="modal-title">Tambah Peserta Baru</div>
+<span class="close" onclick="closeModal('tambah')">&times;</span>
+</div>
+<form id="form-tambah">
+<input type="hidden" name="id_admin" value="1">
+<div class="form-grid">
+<div class="form-group">
+<label>Nama Lengkap</label>
+<input type="text" name="nama_peserta" class="form-control" required>
+</div>
+<div class="form-group">
+<label>Alamat</label>
+<textarea name="alamat" class="form-control" rows="3" required placeholder="Contoh: Jl. Merdeka No. 123, Kota Nganjuk"></textarea>
+</div>
+<div class="form-group">
+<label>NIK (16 digit)</label>
+<input type="text" name="NIK" class="form-control" required minlength="16" maxlength="16">
+</div>
+<!-- 🔸 BARU -->
+<div class="form-group">
+<label>No. Pendaftaran</label>
+<input type="text" name="no_pendaftaran" class="form-control" required minlength="3" placeholder="Contoh: BLK2025001">
+</div>
+<div class="form-group">
+<label>Jenis Kelamin</label>
+<select name="jenis_kelamin" class="form-control" required>
+<option value="L">Laki-laki</option>
+<option value="P">Perempuan</option>
+</select>
+</div>
+<div class="form-group">
+<label>Tanggal Lahir</label>
+<input type="date" name="tgl_lahir" class="form-control" required>
+</div>
+<div class="form-group">
+<label>No HP</label>
+<input type="text" name="NO_HP" class="form-control" required>
+</div>
+<div class="form-group">
+<label>Email</label>
+<input type="email" name="email" class="form-control">
+</div>
+<div class="form-group">
+<label>Jurusan</label>
+<select name="id_jurusan" class="form-control" required>
+<option value="">-- Pilih Jurusan --</option>
+</select>
+</div>
+<div class="form-group">
+<label>Password</label>
+<input type="password" name="password" class="form-control" required minlength="6">
+</div>
+</div>
+<button type="submit" class="btn-modern btn-primary-modern">
+<i class="fas fa-save btn-icon"></i> Simpan Peserta
+</button>
+<button type="button" class="btn-modern btn-danger-modern" onclick="resetTambah();">
+<i class="fas fa-times btn-icon"></i> Batal
+</button>
+</form>
+</div>
+</div>
+
+<!-- MODAL EDIT -->
+<div id="modal-edit" class="modal">
+<div class="modal-content">
+<div class="modal-header">
+<div class="modal-title">Edit Peserta</div>
+<span class="close" onclick="closeModal('edit')">&times;</span>
+</div>
+<form id="form-edit">
+<input type="hidden" name="id_peserta" id="edit-id">
+<div class="form-grid">
+<div class="form-group">
+<label>Nama Lengkap</label>
+<input type="text" name="nama_peserta" id="edit-nama" class="form-control" required>
+</div>
+<div class="form-group">
+<label>Alamat</label>
+<textarea name="alamat" id="edit-alamat" class="form-control" rows="3" required></textarea>
+</div>
+<div class="form-group">
+<label>NIK (16 digit)</label>
+<input type="text" name="NIK" id="edit-nik" class="form-control" required minlength="16" maxlength="16">
+</div>
+<!-- 🔸 BARU -->
+<div class="form-group">
+<label>No. Pendaftaran</label>
+<input type="text" name="no_pendaftaran" id="edit-no-pendaftaran" class="form-control" readonly>
+</div>
+<div class="form-group">
+<label>Jenis Kelamin</label>
+<select name="jenis_kelamin" id="edit-jk" class="form-control" required>
+<option value="L">Laki-laki</option>
+<option value="P">Perempuan</option>
+</select>
+</div>
+<div class="form-group">
+<label>Tanggal Lahir</label>
+<input type="date" name="tgl_lahir" id="edit-tgl" class="form-control" required>
+</div>
+<div class="form-group">
+<label>No HP</label>
+<input type="text" name="NO_HP" id="edit-hp" class="form-control" required>
+</div>
+<div class="form-group">
+<label>Email</label>
+<input type="email" name="email" id="edit-email" class="form-control">
+</div>
+<div class="form-group">
+<label>Jurusan</label>
+<select name="id_jurusan" id="edit-jurusan" class="form-control" required>
+</select>
+</div>
+<div class="form-group">
+<label>Status</label>
+<select name="status" id="edit-status" class="form-control" required>
+<option value="seleksi">Seleksi</option>
+<option value="aktif">Aktif</option>
+<option value="drop_out">Drop Out</option>
+<option value="lulus">Lulus</option>
+</select>
+</div>
+</div>
+<button type="submit" class="btn-modern btn-warning-modern">
+<i class="fas fa-sync-alt btn-icon"></i> Update Peserta
+</button>
+</form>
+</div>
+</div>
+
+<!-- MODAL SUKSES -->
+<div id="modal-sukses" class="modal">
+<div class="modal-content" style="max-width: 350px; text-align:center;">
+<h3 style="margin-bottom: 10px; color: #28a745;">✔ Berhasil</h3>
+<p id="msg-sukses" style="font-size: 15px; margin-bottom: 20px;"></p>
+<button onclick="closeModal('sukses')" class="btn-modern btn-primary-modern">Oke</button>
+</div>
+</div>
+
+<!-- MODAL HAPUS MASSAL -->
+<div id="modal-hapus-massal" class="modal">
+<div class="modal-content" style="max-width:450px;">
+<div class="modal-header">
+<div class="modal-title" style="color:var(--danger); display:flex; align-items:center; gap:8px;">
+<i class="fas fa-exclamation-triangle"></i> Konfirmasi Hapus Massal
+</div>
+<span class="close" onclick="closeModal('hapus-massal')">&times;</span>
+</div>
+<p style="font-size:15px; color:var(--text); margin-bottom:20px;">
+Apakah kamu yakin ingin menghapus <strong id="count-hapus"></strong> peserta yang dipilih?
+</p>
+<div style="display:flex; gap:12px; justify-content:flex-end;">
+<button class="btn-modern btn-primary-modern" onclick="closeModal('hapus-massal')">Batal</button>
+<button class="btn-modern btn-danger-modern" onclick="prosesMassDelete()">Hapus</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL IMPOR -->
+<div id="modal-import" class="modal">
+<div class="modal-content">
+<div class="modal-header">
+<div class="modal-title">Impor Data dari Excel</div>
+<span class="close" onclick="closeModal('import')">&times;</span>
+</div>
+<p style="margin-bottom: 24px; color: var(--muted); font-size: 15px;">
+<i class="fas fa-info-circle"></i> Format file: <strong>.xlsx</strong><br>
+Kolom wajib: <code>Nama, Alamat, Jenis Kelamin, Tanggal Lahir, NIK, No HP, Email, ID Jurusan, No. Pendaftaran</code>
+</p>
+<form id="form-import" enctype="multipart/form-data">
+<div class="form-group">
+<label>File Excel (.xlsx)</label>
+<input type="file" name="file_excel" class="form-control" accept=".xls,.xlsx" required>
+</div>
+<button type="submit" class="btn-modern btn-success-modern">
+<i class="fas fa-file-upload btn-icon"></i> Impor Sekarang
+</button>
+</form>
+<div id="import-result" style="margin-top:10px; color:var(--success)"></div>
+</div>
+</div>
+
+<!-- MODAL HAPUS INDIVIDU -->
+<div id="modal-hapus" class="modal">
+<div class="modal-content" style="max-width:450px;">
+<div class="modal-header">
+<div class="modal-title" style="color:var(--danger); display:flex; align-items:center; gap:8px;">
+<i class="fas fa-trash"></i> Hapus Peserta
+</div>
+<span class="close" onclick="closeModal('hapus')">&times;</span>
+</div>
+<p style="font-size:15px; color:var(--text); margin-bottom:20px;">
+Yakin hapus peserta: <strong id="hapus-nama"></strong>?
+</p>
+<div style="display:flex; gap:12px; justify-content:flex-end;">
+<button class="btn-modern btn-primary-modern" onclick="closeModal('hapus')">Batal</button>
+<button class="btn-modern btn-danger-modern" onclick="prosesHapus()">Hapus</button>
+</div>
+</div>
+</div>
+
+</div>
+</main>
+
+<script>
+// === GLOBAL STATE ===
+let jurusanList = [];
+let hapusID = null;
+let currentPage = 1;
+const itemsPerPage = 10;
+
+// === UTILS ===
+function debounce(func, wait) {
+let timeout;
+return function(...args) {
+clearTimeout(timeout);
+timeout = setTimeout(() => func.apply(this, args), wait);
+};
+}
+function getStatusText(status) {
+const map = {
+'seleksi': 'Seleksi',
+'aktif': 'Aktif',
+'drop_out': 'Drop Out',
+'lulus': 'Lulus'
+};
+return map[status] || status;
+}
+function showSuccess(msg) {
+document.getElementById("msg-sukses").innerText = msg;
+openModal("sukses");
+setTimeout(() => closeModal("sukses"), 3000);
+}
+
+// === MODAL ===
+function openModal(type) {
+document.getElementById('modal-' + type).style.display = 'block';
+document.body.style.overflow = 'hidden';
+}
+function closeModal(type) {
+document.getElementById('modal-' + type).style.display = 'none';
+document.body.style.overflow = '';
+}
+window.onclick = function(e) {
+if (e.target.classList.contains('modal')) {
+closeModal(e.target.id.replace('modal-', ''));
+}
+};
+
+// === SELECT ALL ===
+function toggleSelectAll() {
+const checkboxes = document.querySelectorAll('#pesertaTableBody input[type="checkbox"]');
+const selectAll = document.getElementById('selectAll');
+checkboxes.forEach(cb => cb.checked = selectAll.checked);
+}
+function updateSelectAll() {
+const checkboxes = document.querySelectorAll('#pesertaTableBody input[type="checkbox"]');
+const selectAll = document.getElementById('selectAll');
+const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+selectAll.checked = checkedCount > 0 && checkedCount === checkboxes.length;
+}
+
+// === LOAD HEADER & FOOTER ===
+async function loadHeaderAndFooter() {
+try {
+const [headerRes, footerRes] = await Promise.all([
+fetch('includes/header.html'),
+fetch('includes/footer.html')
+]);
+if (headerRes.ok) {
+document.body.insertAdjacentHTML('afterbegin', await headerRes.text());
+}
+if (footerRes.ok) {
+document.body.insertAdjacentHTML('beforeend', await footerRes.text());
+}
+} catch (err) {
+console.error('Gagal muat header/footer:', err);
+}
+}
+
+// === UPDATE USER INFO ===
+async function updateUserInfo() {
+try {
+const res = await fetch('dashboard_admin_api.php');
+if (!res.ok) return;
+const data = await res.json();
+const avatar = document.getElementById('header-avatar');
+const username = document.getElementById('header-username');
+if (avatar && data.logged_in_foto_profil_path) {
+avatar.src = data.logged_in_foto_profil_path;
+avatar.onerror = () => avatar.src = 'images/profile.png';
+}
+if (username) {
+username.textContent = data.logged_in_username || 'Akun';
+}
+} catch (err) {
+console.error('Gagal update user:', err);
+}
+}
+
+// === LOAD JURUSAN ===
+function loadJurusan() {
+fetch('kelola_data_peserta.php?api=jurusan')
+.then(res => res.json())
+.then(data => {
+jurusanList = data;
+// Modal tambah
+const sel1 = document.querySelector('[name="id_jurusan"]');
+sel1.innerHTML = '<option value="">-- Pilih Jurusan --</option>';
+jurusanList.forEach(j => {
+const opt = document.createElement('option');
+opt.value = j.id_jurusan;
+opt.textContent = j.nama_jurusan;
+sel1.appendChild(opt);
+});
+// Modal edit
+const sel2 = document.getElementById('edit-jurusan');
+sel2.innerHTML = '';
+jurusanList.forEach(j => {
+const opt = document.createElement('option');
+opt.value = j.id_jurusan;
+opt.textContent = j.nama_jurusan;
+sel2.appendChild(opt);
+});
+// Filter dropdown
+const filter = document.getElementById('filterJurusan');
+filter.innerHTML = '<option value="all">Semua Jurusan</option>';
+jurusanList.forEach(j => {
+const opt = document.createElement('option');
+opt.value = j.nama_jurusan;
+opt.textContent = j.nama_jurusan;
+filter.appendChild(opt);
+});
+})
+.catch(err => {
+console.error(err);
+document.getElementById('pesertaTableBody').innerHTML = `<tr><td colspan="8" style="text-align:center;color:red;">Gagal memuat jurusan</td></tr>`;
+});
+}
+
+// === LOAD PESERTA ===
+function loadPeserta() {
+const search = document.getElementById('searchInput').value.trim();
+const jurusan = document.getElementById('filterJurusan').value;
+let url = 'kelola_data_peserta.php?api=peserta';
+const params = [];
+if (search) params.push('search=' + encodeURIComponent(search));
+if (jurusan !== 'all') params.push('jurusan=' + encodeURIComponent(jurusan));
+if (params.length) url += '&' + params.join('&');
+fetch(url)
+.then(res => res.json())
+.then(fullData => {
+const totalItems = fullData.length;
+const totalPages = Math.ceil(totalItems / itemsPerPage);
+const startIndex = (currentPage - 1) * itemsPerPage;
+const endIndex = startIndex + itemsPerPage;
+const pageData = fullData.slice(startIndex, endIndex);
+const tbody = document.getElementById('pesertaTableBody');
+if (pageData.length === 0) {
+tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:30px; color:var(--muted);">Tidak ada data ditemukan</td></tr>`;
+renderPagination(totalPages);
+return;
+}
+tbody.innerHTML = pageData.map((p, i) => `
+<tr>
+<td class="checkbox-cell">
+<input type="checkbox" class="row-checkbox" value="${p.id_peserta}" onchange="updateSelectAll()">
+</td>
+<td>${startIndex + i + 1}</td>
+<td>${p.nama_peserta}</td>
+<td>${p.NIK}</td>
+<td>${p.no_pendaftaran || '—'}</td> <!-- 🔸 BARU -->
+<td>${p.nama_jurusan || '-'}</td>
+<td><span class="status-badge status-${p.status.replace('_', '-')}">${getStatusText(p.status)}</span></td>
+<td class="action-cell">
+<button class="btn-modern btn-warning-modern" onclick="editPeserta(${p.id_peserta})">
+<i class="fas fa-edit btn-icon"></i> Edit
+</button>
+<button class="btn-modern btn-danger-modern" onclick="confirmHapus(${p.id_peserta}, '${p.nama_peserta}')">
+<i class="fas fa-trash btn-icon"></i> Hapus
+</button>
+</td>
+</tr>
+`).join('');
+renderPagination(totalPages);
+updateSelectAll();
+})
+.catch(err => {
+console.error(err);
+document.getElementById('pesertaTableBody').innerHTML = `<tr><td colspan="8" style="text-align:center;color:red;">Gagal memuat data peserta</td></tr>`;
+renderPagination(1);
+});
+}
+
+// === PAGINATION FUNCTIONS ===
+function renderPagination(totalPages) {
+const container = document.querySelector('.data-card');
+const existing = container.querySelector('.pagination-controls');
+if (existing) existing.remove();
+if (totalPages <= 1) return;
+const paginationHTML = `
+<div class="pagination-controls">
+<button class="pagination-btn" ${currentPage === 1 ? 'disabled' : ''} data-action="prev">
+<i class="fas fa-chevron-left"></i>
+</button>
+<span class="pagination-info">Halaman</span>
+<input
+type="number"
+class="pagination-input"
+min="1"
+max="${totalPages}"
+value="${currentPage}"
+>
+<span class="pagination-info">dari ${totalPages}</span>
+<button class="pagination-go-btn" data-action="go">Go</button>
+<button class="pagination-btn" ${currentPage === totalPages ? 'disabled' : ''} data-action="next">
+<i class="fas fa-chevron-right"></i>
+</button>
+</div>
+`;
+container.insertAdjacentHTML('beforeend', paginationHTML);
+}
+
+function goToPage(page) {
+const search = document.getElementById('searchInput').value.trim();
+const jurusan = document.getElementById('filterJurusan').value;
+let url = 'kelola_data_peserta.php?api=peserta';
+const params = [];
+if (search) params.push('search=' + encodeURIComponent(search));
+if (jurusan !== 'all') params.push('jurusan=' + encodeURIComponent(jurusan));
+if (params.length) url += '&' + params.join('&');
+fetch(url)
+.then(res => res.json())
+.then(fullData => {
+const totalPages = Math.ceil(fullData.length / itemsPerPage);
+if (page >= 1 && page <= totalPages) {
+currentPage = page;
+loadPeserta();
+}
+});
+}
+
+// === EVENT DELEGATION FOR PAGINATION ===
+document.addEventListener('click', function(e) {
+const container = e.target.closest('.pagination-controls');
+if (!container) return;
+const input = container.querySelector('.pagination-input');
+const currentPage = parseInt(input.value);
+const totalPages = parseInt(input.max);
+if (e.target.closest('[data-action="prev"]') && currentPage > 1) {
+goToPage(currentPage - 1);
+}
+if (e.target.closest('[data-action="next"]') && currentPage < totalPages) {
+goToPage(currentPage + 1);
+}
+if (e.target.closest('[data-action="go"]')) {
+const page = parseInt(input.value);
+if (page >= 1 && page <= totalPages) {
+goToPage(page);
+}
+}
+});
+
+// HANDLE ENTER IN INPUT
+document.addEventListener('keypress', function(e) {
+if (e.key === 'Enter' && e.target.classList.contains('pagination-input')) {
+const page = parseInt(e.target.value);
+const totalPages = parseInt(e.target.max);
+if (page >= 1 && page <= totalPages) {
+goToPage(page);
+}
+}
+});
+
+// === MASS ACTIONS ===
+function getSelectedIds() {
+const checkboxes = document.querySelectorAll('#pesertaTableBody .row-checkbox:checked');
+return Array.from(checkboxes).map(cb => cb.value);
+}
+
+function confirmMassDelete() {
+const selectedIds = getSelectedIds();
+if (selectedIds.length === 0) {
+alert('Pilih minimal 1 peserta untuk dihapus!');
+return;
+}
+document.getElementById('count-hapus').textContent = selectedIds.length;
+openModal('hapus-massal');
+}
+
+function prosesMassDelete() {
+const selectedIds = getSelectedIds();
+if (selectedIds.length === 0) return;
+fetch('kelola_data_peserta.php', {
+method: 'POST',
+headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+body: 'hapus_massal=' + JSON.stringify(selectedIds)
+})
+.then(r => r.json())
+.then(json => {
+if (json.status === 'success') {
+closeModal('hapus-massal');
+showSuccess(`${json.deleted} peserta berhasil dihapus!`);
+loadPeserta();
+} else {
+alert('Gagal menghapus: ' + (json.message || 'Terjadi kesalahan'));
+}
+});
+}
+
+function updateMassStatus() {
+const selectedIds = getSelectedIds();
+const newStatus = document.getElementById('massStatus').value;
+if (selectedIds.length === 0) {
+alert('Pilih minimal 1 peserta!');
+return;
+}
+if (!newStatus) {
+alert('Pilih status yang akan diupdate!');
+return;
+}
+fetch('kelola_data_peserta.php', {
+method: 'POST',
+headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+body: 'update_massal_status=' + JSON.stringify({
+ids: selectedIds,
+status: newStatus
+})
+})
+.then(r => r.json())
+.then(json => {
+if (json.status === 'success') {
+showSuccess(`${json.updated} peserta berhasil diupdate statusnya!`);
+loadPeserta();
+} else {
+alert('Gagal mengupdate: ' + (json.message || 'Terjadi kesalahan'));
+}
+});
+}
+
+// === HAPUS INDIVIDU ===
+function confirmHapus(id, nama) {
+hapusID = id;
+document.getElementById("hapus-nama").textContent = `"${nama}"`;
+openModal("hapus");
+}
+
+function prosesHapus() {
+if (!hapusID) return;
+fetch('kelola_data_peserta.php', {
+method: 'POST',
+headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+body: `hapus_id=${hapusID}`
+})
+.then(r => r.json())
+.then(json => {
+if (json.status === 'success') {
+closeModal("hapus");
+loadPeserta();
+showSuccess("Peserta berhasil dihapus!");
+} else {
+alert('Gagal menghapus: ' + (json.message || 'Error tidak diketahui'));
+}
+});
+}
+
+// === EDIT ===
+function editPeserta(id) {
+fetch(`kelola_data_peserta.php?get_peserta=${id}`)
+.then(r => r.json())
+.then(data => {
+if (!data.id_peserta) return alert('Data tidak ditemukan');
+document.getElementById('edit-id').value = data.id_peserta;
+document.getElementById('edit-nama').value = data.nama_peserta;
+document.getElementById('edit-alamat').value = data.alamat;
+document.getElementById('edit-nik').value = data.NIK;
+document.getElementById('edit-no-pendaftaran').value = data.no_pendaftaran || ''; // 🔸
+document.getElementById('edit-hp').value = data.NO_HP;
+document.getElementById('edit-email').value = data.email || '';
+document.getElementById('edit-tgl').value = data.tgl_lahir;
+document.getElementById('edit-status').value = data.status;
+document.getElementById('edit-jk').value = data.jenis_kelamin;
+document.getElementById('edit-jurusan').value = data.id_jurusan;
+openModal('edit');
+})
+.catch(err => alert('Error: ' + err));
+}
+
+// === EVENT LISTENERS ===
+document.addEventListener('DOMContentLoaded', async () => {
+await loadHeaderAndFooter();
+const activeLink = document.querySelector('a[href="kelola_data_peserta.html"]');
+if (activeLink) activeLink.classList.add('active');
+
+try {
+const res = await fetch('cek_session.php');
+const data = await res.json();
+if (!data.login) {
+document.body.innerHTML = `
+<div style="text-align:center; padding:60px; color:#ef4444; font-size:20px; font-family:'Poppins',sans-serif;">
+❌ Akses ditolak<br>
+<span style="font-size:16px; color:#64748b;">Silakan login sebagai admin.</span>
+</div>
+`;
+return;
+}
+} catch (err) {
+console.error(err);
+}
+
+await updateUserInfo();
+loadJurusan();
+loadPeserta();
+
+document.getElementById('searchInput').addEventListener('input', debounce(() => {
+currentPage = 1;
+loadPeserta();
+}, 500));
+
+document.getElementById('filterJurusan').addEventListener('change', () => {
+currentPage = 1;
+loadPeserta();
+});
+
+document.getElementById('form-edit').addEventListener('submit', function(e) {
+e.preventDefault();
+fetch('kelola_data_peserta.php', {
+method: 'POST',
+body: new URLSearchParams(new FormData(this))
+})
+.then(r => r.json())
+.then(json => {
+if (json.status === 'success') {
+showSuccess("Data berhasil diperbarui!");
+closeModal('edit');
+loadPeserta();
+} else {
+alert('Gagal menyimpan: ' + (json.message || JSON.stringify(json)));
+}
+});
+});
+
+document.getElementById('form-tambah').addEventListener('submit', function(e) {
+e.preventDefault();
+fetch('kelola_data_peserta.php', {
+method: 'POST',
+body: new URLSearchParams(new FormData(this))
+})
+.then(r => r.json())
+.then(json => {
+if (json.status === 'success') {
+showSuccess("Data peserta berhasil ditambahkan!");
+closeModal('tambah');
+this.reset();
+loadPeserta();
+} else {
+alert("Gagal menyimpan: " + (json.message || JSON.stringify(json)));
+}
+});
+});
+
+document.getElementById('form-import').addEventListener('submit', function(e) {
+e.preventDefault();
+const formData = new FormData(this);
+const overlay = document.createElement('div');
+overlay.id = 'overlay';
+overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:9999;';
+overlay.innerHTML = `<div style="background:#fff;padding:30px;border-radius:10px;width:400px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+<p>Data sedang diproses... ⏳</p>
+</div>`;
+document.body.appendChild(overlay);
+
+// 🔸 Perbaiki typo: import_excel_peserta.php
+fetch('import_exce_pesertal.php', { method: 'POST', body: formData })
+.then(res => res.json())
+.then(data => {
+document.body.removeChild(overlay);
+if (data.status === 'success') {
+showSuccess(`${data.inserted} data berhasil ditambahkan!`);
+loadPeserta();
+} else {
+alert('Gagal: ' + (data.message || JSON.stringify(data)));
+}
+closeModal('import');
+})
+.catch(err => {
+console.error(err);
+document.body.removeChild(overlay);
+alert('Terjadi kesalahan saat impor.');
+closeModal('import');
+});
+});
+
+});
+
+function resetTambah() {
+document.getElementById("form-tambah").reset();
+closeModal('tambah');
+}
+
+document.querySelectorAll('.modal').forEach(modal => {
+modal.addEventListener('click', (e) => {
+if (e.target === modal) {
+e.stopPropagation();
+modal.querySelector('.modal-content').classList.add('shake');
+setTimeout(() => modal.querySelector('.modal-content').classList.remove('shake'), 350);
+}
+});
+modal.querySelector('.modal-content').addEventListener('click', e => e.stopPropagation());
+});
+</script>
+
+</body>
+</html>

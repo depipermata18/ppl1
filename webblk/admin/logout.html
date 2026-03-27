@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Anti Cache -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <title>Konfirmasi Logout – e-BLK Nganjuk</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #2F5FA9;
+      --primary-light: #4E7DCA;
+      --primary-soft: rgba(47, 95, 169, 0.15);
+      --primary-dim: rgba(47, 95, 169, 0.08);
+
+      --text: #1e293b;
+      --text-light: #64748b;
+
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --bg-gradient: linear-gradient(135deg, #e0ecff, #d0e0ff);
+
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      --border: 1px solid rgba(255, 255, 255, 0.3);
+
+      --transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .popup {
+      background: var(--card-bg);
+      padding: 35px 40px;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      border: var(--border);
+      text-align: center;
+      position: relative;
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .popup::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 8px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--primary-light));
+      border-radius: 8px 0 0 8px;
+    }
+
+    .icon {
+      font-size: 50px;
+      color: var(--primary);
+      margin-bottom: 18px;
+      animation: bounce 1.2s infinite 0.3s;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .popup h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .popup p {
+      font-size: 16px;
+      color: var(--text-light);
+      margin-bottom: 28px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .yes {
+      background: #ef4444;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(239, 68, 68, 0.25);
+    }
+    .yes:hover {
+      background: #dc2626;
+      transform: translateY(-3px);
+    }
+
+    .no {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+    .no:hover {
+      background: var(--primary);
+      color: #fff;
+      transform: translateY(-3px);
+    }
+
+    @media (max-width: 480px) {
+      .btn-group { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="popup">
+  <i class="fas fa-sign-out-alt icon"></i>
+  <h2>Konfirmasi Logout</h2>
+  <p>Apakah Anda yakin ingin keluar dari sesi ini?</p>
+
+  <div class="btn-group">
+    <button class="btn yes" onclick="prosesLogout()">
+      <i class="fas fa-check"></i> Ya, Logout
+    </button>
+
+    <button class="btn no" onclick="batal()">
+      <i class="fas fa-times"></i> Batal
+    </button>
+  </div>
+</div>
+
+<script>
+  function prosesLogout() {
+    // Menampilkan efek loading jika ingin
+    document.body.style.opacity = "0.4";
+    document.body.style.pointerEvents = "none";
+
+    // Delay sebentar lalu pindah ke PHP terakhir
+    setTimeout(() => {
+      window.location.href = "logout.php";
+    }, 600);
+  }
+
+  function batal() {
+    // Kembali ke halaman sebelumnya
+    history.back();
+  }
+</script>
+
+</body>
+</html>
+

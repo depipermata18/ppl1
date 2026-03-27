@@ -1,0 +1,619 @@
+2025-11-17 04:07:39 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-17 04:13:12 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-17 04:13:35 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-17 04:14:35 - Method: POST - URI: /webblk/kelola_jadwal.php
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+Exception: Duplicate entry '1-1' for key 'id_admin'
+2025-11-17 04:14:40 - Method: POST - URI: /webblk/kelola_jadwal.php
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+Exception: Duplicate entry '1-1' for key 'id_admin'
+2025-11-17 04:16:56 - Method: POST - URI: /webblk/kelola_jadwal.php
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+Exception: Duplicate entry '1-1' for key 'id_admin'
+2025-11-17 04:18:29 - Method: POST - URI: /webblk/kelola_jadwal.php
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+Exception: Duplicate entry '1-1' for key 'id_admin'
+2025-11-17 04:20:07 - Method: POST - URI: /webblk/kelola_jadwal.php
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+Exception: Duplicate entry '1-1' for key 'id_admin'
+2025-11-17 04:20:09 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-17 04:20:30 - Method: POST - URI: /webblk/kelola_jadwal.php
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+Exception: Duplicate entry '1-1' for key 'id_admin'
+2025-11-17 04:22:44 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-17 17:42:42 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+)
+
+INFO endpoint requested
+Akses ditolak - session tidak valid
+2025-11-18 07:55:08 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-18 07:58:25 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-18 10:28:50 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-18 16:34:00 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-20 02:34:16 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-20 02:34:22 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-20 14:30:08 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-20 14:33:54 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-20 15:28:49 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-20 17:07:04 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-20 17:09:34 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-20 17:09:35 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-20 17:12:16 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-20 17:13:28 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 07:45:25 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 07:45:47 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 10:44:56 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+    [logged_in] => 1
+    [logged_in_admin_name] => ruri_admin
+    [user_id] => 1
+    [nama_admin] => ruri_admin
+    [nik] => 
+    [nama_peserta] => 
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 12:07:45 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+    [logged_in] => 1
+    [logged_in_admin_name] => ruri_admin
+    [user_id] => 1
+    [nama_admin] => ruri_admin
+    [nik] => 
+    [nama_peserta] => 
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 12:10:16 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+    [logged_in] => 1
+    [logged_in_admin_name] => ruri_admin
+    [user_id] => 1
+    [nama_admin] => ruri_admin
+    [nik] => 
+    [nama_peserta] => 
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 12:35:49 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+)
+
+INFO endpoint requested
+Akses ditolak - session tidak valid
+2025-11-21 12:36:15 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [id_admin] => 1
+)
+
+INFO endpoint requested
+Akses ditolak - session tidak valid
+2025-11-21 12:36:37 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 12:37:23 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+)
+
+INFO endpoint requested
+Akses ditolak - session tidak valid
+2025-11-21 12:38:01 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+)
+
+INFO endpoint requested
+Akses ditolak - session tidak valid
+2025-11-21 12:38:27 - Method: POST - URI: /webblk/kelola_jadwal.php
+Session: Array
+(
+)
+
+Akses ditolak - session tidak valid
+2025-11-21 12:38:53 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 13:31:14 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 13:31:25 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+)
+
+INFO endpoint requested
+Akses ditolak - session tidak valid
+2025-11-21 13:33:35 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [id_admin] => 1
+)
+
+INFO endpoint requested
+Akses ditolak - session tidak valid
+2025-11-21 14:10:59 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+)
+
+INFO endpoint requested
+Akses ditolak - session tidak valid
+2025-11-21 14:43:37 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [id_admin] => 1
+)
+
+INFO endpoint requested
+Akses ditolak - session tidak valid
+2025-11-21 14:57:37 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+)
+
+INFO endpoint requested
+Akses ditolak - session tidak valid
+2025-11-21 15:13:13 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+)
+
+INFO endpoint requested
+Akses ditolak - session tidak valid
+2025-11-21 15:59:02 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 15:59:18 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 17:08:07 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 17:09:04 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 17:37:08 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 17:50:09 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 17:50:14 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 17:50:31 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+)
+
+INFO endpoint requested
+Akses ditolak - session tidak valid
+2025-11-21 17:50:46 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+)
+
+INFO endpoint requested
+Akses ditolak - session tidak valid
+2025-11-21 18:08:44 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 18:09:15 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 18:10:22 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 18:11:24 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-21 18:13:38 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 1
+    [username] => ruri_admin
+    [id_jurusan] => 1
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
+2025-11-22 09:40:37 - Method: GET - URI: /webblk/kelola_jadwal.php?info=1
+Session: Array
+(
+    [role] => admin
+    [id_admin] => 10
+    [username] => yoga_admin
+    [id_jurusan] => 10
+    [nama_admin] => Yoga Pradipta
+)
+
+INFO endpoint requested
+INFO: Berhasil ambil data admin
