@@ -70,104 +70,131 @@ foreach ($daftar_jurusan as &$jur) {
         line-height: 1.6;
         overflow-x: hidden;
     }
+/* ===== HEADER BARU ===== */
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    /* HEADER */
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 14px 24px;
-        background: var(--glass);
-        backdrop-filter: blur(10px);
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        gap: 12px;
-        border-bottom: 1px solid rgba(255,255,255,0.5);
-    }
-    header .brand h1 {
-        font-size: 20px;
-        font-weight: 700;
-        background: linear-gradient(90deg, #0056b3, #8db4eb);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    nav {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-    }
-    nav a {
-        text-decoration: none;
-        color: var(--text);
-        font-weight: 600;
-        padding: 8px 10px;
-        border-radius: 8px;
-        transition: all 0.25s ease;
-        position: relative;
-    }
-    nav a::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        background: var(--accent);
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
-    }
-    nav a:hover::after { width: 80%; }
-    nav a:hover { color: #0056b3; transform: translateY(-2px); }
-.login-btn {
-    padding: 10px 24px;
-    background: var(--accent);
-    color: #111;
-    font-weight: 600;
-    letter-spacing: 0.4px;
-    border-radius: 999px;
-    text-decoration: none;
-    display: inline-block;
-    position: relative;
+    padding: 16px 60px; /* tambah jarak kiri kanan */
+    position: sticky;
+    top: 0;
 
-    /* elegan depth */
-    box-shadow: 
-        0 4px 10px rgba(0,0,0,0.08),
-        0 1px 2px rgba(0,0,0,0.06);
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(15px);
 
-    transition: all 0.25s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-/* inner light biar keliatan “mahal” */
-.login-btn::after {
+/* bikin kanan semua */
+nav {
+    display: flex;
+    gap: 25px;
+    margin-left: auto;
+    margin-right: 20px; /* biar gak nempel kanan banget */
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 10px; /* biar gak nempel kiri */
+}
+
+.logo {
+    width: 35px;
+    height: auto;
+}
+
+.brand h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+
+    background: linear-gradient(90deg, #0056b3, #6fa8ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* NAV */
+nav {
+    display: flex;
+    gap: 22px;
+}
+
+nav a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #333;
+    position: relative;
+    padding: 6px 4px;
+    transition: all 0.3s ease;
+}
+
+nav a::after {
     content: "";
     position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
-    pointer-events: none;
+    bottom: -4px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #0056b3;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+nav a:hover {
+    color: #0056b3;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* LOGIN BUTTON */
+.login-btn {
+    background: linear-gradient(135deg, #6fa8ff, #8db4eb);
+    padding: 10px 24px;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #000;
+
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+    transition: all 0.25s ease;
 }
 
 .login-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 
-        0 8px 20px rgba(0,0,0,0.12),
-        0 2px 4px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.2);
 }
 
-.login-btn:active {
-    transform: translateY(0);
-    box-shadow: 
-        0 3px 8px rgba(0,0,0,0.1),
-        inset 0 2px 4px rgba(0,0,0,0.1);
-}
-
-    /* MOBILE: sembunyikan nav */
-    @media (max-width: 768px) {
-        nav { display: none; }
-        header { padding: 12px 16px; }
-        header .brand h1 { font-size: 18px; }
+/* ANIMASI */
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
     }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .main-header {
+        padding: 14px 20px;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .brand h1 {
+        font-size: 18px;
+    }
+}
 
     /* ANIMASI */
     .animate {
@@ -596,16 +623,19 @@ foreach ($daftar_jurusan as &$jur) {
 <body>
 
 <!-- HEADER -->
-<header>
+<header class="main-header">
     <div class="brand">
+        <img src="webblk/image/logo.png" alt="Logo" class="logo">
         <h1>UPT BLK Nganjuk</h1>
     </div>
+
     <nav>
         <a href="#tentang">Tentang</a>
         <a href="#jurusan">Jurusan</a>
         <a href="#download">Download</a>
         <a href="#kontak">Kontak</a>
     </nav>
+
     <a href="webblk/login.php" class="login-btn">Login</a>
 </header>
 
