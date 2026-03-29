@@ -796,25 +796,38 @@ nav a:hover::after {
 <!-- KONTAK -->
 <section class="kontak-section animate slide-right" id="kontak">
     <h2>📞 Kontak UPT BLK Nganjuk</h2>
+
     <div class="kontak-grid">
         <div class="kontak-item">
             <div class="kontak-icon">📍</div>
-            <div class="kontak-text">Jl. Kapten Kasihin HS No. 3<br>Cangkringan, Nganjuk</div>
+            <div class="kontak-text">
+                Jl. Kapten Kasihin HS No. 3<br>
+                Cangkringan, Nganjuk
+            </div>
         </div>
+
         <div class="kontak-item">
             <div class="kontak-icon">📞</div>
-            <div class="kontak-text">0358 321048</div>
+            <div class="kontak-text">
+                <a href="tel:0358321048" class="kontak-link">0358 321048</a>
+            </div>
         </div>
+
         <div class="kontak-item">
             <div class="kontak-icon">💬</div>
             <div class="kontak-text">
-                <a href="https://wa.me/6285713573000" class="kontak-link">0857 1357 3000</a>
+                <a href="https://wa.me/6285713573000" target="_blank" class="kontak-link">
+                    0857 1357 3000
+                </a>
             </div>
         </div>
+
         <div class="kontak-item">
             <div class="kontak-icon">✉️</div>
             <div class="kontak-text">
-                <a href="mailto:blknganjuk@gmail.com" class="kontak-link">blknganjuk@gmail.com</a>
+                <a href="mailto:blknganjuk@gmail.com" class="kontak-link">
+                    blknganjuk@gmail.com
+                </a>
             </div>
         </div>
     </div>
